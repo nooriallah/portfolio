@@ -1,6 +1,7 @@
 /******* Bootstrap Theming ********/
 
-$primary: #0BCEAF;
+// $primary: #0BCEAF;
+$primary: #54a7ff;
 $secondary: #6c757d;
 $light: #ffffff;
 $dark: #343a40;
@@ -19,8 +20,9 @@ $enable-responsive-font-sizes: true;
 
 @import "bootstrap/scss/bootstrap";
 
-
+ 
 /********** Template CSS ************/
+
 h1,
 .font-weight-bolder {
     font-weight: 900 !important;
@@ -255,17 +257,16 @@ h6,
     height: 0;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 4px;
     opacity: 0;
-    transition: .5s;
+    transition: all 0.5s ease;
 }
 
 .portfolio-item:hover .portfolio-btn {
     opacity: 1;
     width: calc(100% - 60px);
-    height: calc(100% - 60px);
-    top: 30px;
-    left: 30px;
+    min-height: 100px;
 }
 
 .testimonial-carousel .owl-dots {

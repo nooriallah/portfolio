@@ -1,0 +1,47 @@
+<div class="col-lg-4 col-md-6 text-center mb-5">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <i class="fa fa-2x fa-laptop-code service-icon bg-primary text-white mr-3"></i>
+                        <h4 class="font-weight-bold m-0">Web Development</h4>
+                    </div>
+                    <p>
+                        Transforming ideas into reality. From front-end to back-end, I create powerful and dynamic
+                        websites. Let's build your digital success.
+                    </p>
+                    <!-- <a class="border-bottom border-primary text-decoration-none" href="">Read More</a> -->
+                </div>
+
+                <div class="col-lg-4 col-md-6 text-center mb-5">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <i class="fab fa-2x fa-android service-icon bg-primary text-white mr-3"></i>
+                        <h4 class="font-weight-bold m-0">Wordpress website</h4>
+                    </div>
+                    <p>
+                        Crafting stunning and user-friendly websites with the power of Wordpress. Elevate your
+                        online presence and boost your business.
+                    </p>
+                    <!-- <a class="border-bottom border-primary text-decoration-none" href="">Read More</a> -->
+                </div>
+
+                <div class="col-lg-4 col-md-6 text-center mb-5">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <i class="fa fa-2x fa-search service-icon bg-primary text-white mr-3"></i>
+                        <h4 class="font-weight-bold m-0">SEO Optimazation</h4>
+                    </div>
+                    <p>
+                        SEO Pro: Skyrocket your website's visibility and attract more organic traffic. Unleash the
+                        potential of SEO optimization for your business success.
+                    </p>
+                    <!-- <a class="border-bottom border-primary text-decoration-none" href="">Read More</a> -->
+                </div>
+
+                <div class="col-lg-4 col-md-6 text-center mb-5">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <i class="fa fa-2x fa-edit service-icon bg-primary text-white mr-3"></i>
+                        <h4 class="font-weight-bold m-0">MIS Development</h4>
+                    </div>
+                    <p>
+                        MIS Developer: Streamline your business processes with efficient MIS solutions. Automate
+                        data management and boost productivity.
+                    </p>
+                    <!-- <a class="border-bottom border-primary text-decoration-none" href="">Read More</a> -->
+                </div>

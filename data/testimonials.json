@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Ab.Bari Ramish",
+    "position": "General manager / Obrang",
+    "description": "Highly recommend Mr.Nooriallah Qayoumi for website development! Their expertise in PHP and ReactJS brought our project to life. Prompt communication and exceptional work ethic made the process seamless.",
+    
+    "image": "img/clients/testimonial-1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Hussain Rajabi",
+    "position": "Sell Manager / Lightbox tak",
+    "description": "I am incredibly impressed with Mr.Nooriallah Qayoumi's web development skills. They transformed our ideas into a user-friendly and visually stunning website. It was a pleasure working with them.",
+    
+    "image": "img/clients/testimonial-2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "S.Basir Rashha",
+    "position": "Sell Manager / Rashha design",
+    "description": "Working with Mr.Nooriallah Qayoumi was a fantastic experience! They delivered a beautifully crafted website that perfectly captured our vision. Highly recommended for their expertise and professionalism.",
+
+    "image": "img/clients/testimonial-3.jpg"
+  }
+]

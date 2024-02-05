@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "image": "img/portfo_pics/rashha.webp",
+    "title": "Rashha Design",
+    "visit_text": "Visit",
+    "url": "https://rashhadesign.com",
+    "category": "Pure"
+  },
+  {
+    "id": 2,
+    "image": "img/portfo_pics/lbtak.webp",
+    "title": "LBtak",
+    "visit_text": "Visit",
+    "url": "https://lbtak.com",
+    "category": "wordpress"
+  },
+  {
+    "id": 3,
+    "image": "img/portfo_pics/kamadc.webp",
+    "title": "Kamadc",
+    "visit_text": "Visit",
+    "url": "https://www.kamadc.jobs4peace.net/",
+    "category": "wordpress"
+  },
+  {
+    "id": 4,
+    "image": "img/portfo_pics/garcia.webp",
+    "title": "Cecelia Garcia",
+    "visit_text": "Visit",
+    "url": "https://garcia.jobs4peace.net/",
+    "category": "wordpress"
+  },
+  {
+    "id": 5,
+    "image": "img/portfo_pics/obrang.webp",
+    "title": "Obrang Media",
+    "visit_text": "Visit",
+    "url": "https://obrang.com",
+    "category": "pure"
+  },
+  {
+    "id": 6,
+    "image": "img/portfo_pics/j4p.webp",
+    "title": "Jobs 4 peace",
+    "visit_text": "Visit",
+    "url": "https://jobs4peace.net",
+    "category": "pure"
+  },
+  {
+    "id": 7,
+    "image": "img/portfo_pics/bb04.webp",
+    "title": "Binary Brains",
+    "visit_text": "Visit",
+    "url": "https://bb04.netlify.app/",
+    "category": "pure"
+  },
+  {
+    "id": 8,
+    "image": "img/portfo_pics/scholar.webp",
+    "title": "Scholar",
+    "visit_text": "Visit",
+    "url": "https://scholar.lbtak.com",
+    "category": "pure"
+  },
+  {
+    "id": 9,
+    "image": "img/portfo_pics/cpp6.webp",
+    "title": "CPP",
+    "visit_text": "Visit",
+    "url": "https://cpp6.netlify.app",
+    "category": "pure"
+  },
+  {
+    "id": 10,
+    "image": "img/portfo_pics/bp.webp",
+    "title": "Bright point plus",
+    "visit_text": "Visit",
+    "url": "https://brightpoint.brightpointplus.com/",
+    "category": "pure"
+  }
+]
