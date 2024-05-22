@@ -22,7 +22,9 @@ $enable-responsive-font-sizes: true;
 
  
 /********** Template CSS ************/
-
+* {
+    scroll-behavior: smooth;
+}
 h1,
 .font-weight-bolder {
     font-weight: 900 !important;
