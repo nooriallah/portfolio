@@ -1,5 +1,29 @@
 [
   {
+    "id": 0,
+    "image": "img/portfo_pics/saiah.webp",
+    "title": "Saiah Art Gallery",
+    "visit_text": "Visit",
+    "url": "https://saiahartgallery.com/",
+    "category": "Pure"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/seidness.webp",
+    "title": "Seidenstrasse Restaurant",
+    "visit_text": "Visit",
+    "url": "https://seidenstrasse.restaurant",
+    "category": "Pure"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/maham.webp",
+    "title": "Maham Tejarat Arshin",
+    "visit_text": "Visit",
+    "url": "https://mahamtejaratarshin.com/",
+    "category": "Pure"
+  },
+  {
     "id": 1,
     "image": "img/portfo_pics/rashha.webp",
     "title": "Rashha Design",
