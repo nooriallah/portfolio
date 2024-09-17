@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap-image/1.1">  
+    <url>  
+        <loc>https://nooriallah.netlify.app/</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>daily</changefreq>  
+        <priority>1.0</priority>  
+    </url>  
+    <url>  
+        <loc>https://nooriallah.netlify.app/#about</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>monthly</changefreq>  
+        <priority>0.8</priority>  
+    </url>  
+    <url>  
+        <loc>https://nooriallah.netlify.app/#portfolio</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>monthly</changefreq>  
+        <priority>0.8</priority>  
+    </url>  
+    <url>  
+        <loc>https://nooriallah.netlify.app/#qualification</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>monthly</changefreq>  
+        <priority>0.8</priority>  
+    </url> 
+    <url>  
+        <loc>https://nooriallah.netlify.app/#skill</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>monthly</changefreq>  
+        <priority>0.8</priority>  
+    </url> 
+     <url>  
+        <loc>https://nooriallah.netlify.app/#testimonial</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>monthly</changefreq>  
+        <priority>0.8</priority>  
+    </url> 
+     <url>  
+        <loc>https://nooriallah.netlify.app/#contact</loc>  
+        <lastmod>2023-10-01</lastmod>  
+        <changefreq>monthly</changefreq>  
+        <priority>0.8</priority>  
+    </url> 
+    <!-- Add more URLs as necessary -->  
+</urlset>
