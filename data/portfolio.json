@@ -1,6 +1,14 @@
 [
   {
     "id": 0,
+    "image": "img/portfo_pics/shenaas.png",
+    "title": "Shenaas Marketing Agency",
+    "visit_text": "Visit",
+    "url": "https://shenaas.com/",
+    "category": "Pure"
+  },
+  {
+    "id": 0,
     "image": "img/portfo_pics/saiah.webp",
     "title": "Saiah Art Gallery",
     "visit_text": "Visit",
