@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "PHP",
+    "course": "Laracasts",
+    "date": "2023",
+    "description": "Proficient in PHP after completing the Laracasts online course. Equipped with the knowledge of building robust backends, working with databases, and creating dynamic web applications. Excited to apply PHP skills to develop innovative web solutions."
+  },
+  {
+    "id": 2,
+    "title": "Javascript & Reactjs",
+    "course": "Scrimba",
+    "date": "2023",
+    "description":  "Skilled in JavaScript and React.js, completed Scrimba's online course. Passionate about crafting dynamic user interfaces and using modern web technologies for creating engaging applications."
+  },
+  {
+    "id": 3,
+    "title": "Ceritfy In DEL & EFL",
+    "course": "Cambridge International Organization",
+    "date": "2019 - 2020",
+    "description":  "Cambridge International EFL certified, proficient in English language skills. Experienced in language acquisition and comprehension, eager to contribute language expertise and promote effective communication."
+  },
+  {
+    "id": 4,
+    "title": "Bachlor In CSE",
+    "course": "Allamah University",
+    "date": "2019 - 2023",
+    "description":  "Bachelor's in Computer Science (Software Engineering) graduate with a passion for creating innovative software solutions. Skilled in coding, problem-solving, and collaborating on diverse projects. Excited to contribute to the tech industry's growth and impact."
+  }
+
+
+]

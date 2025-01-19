@@ -5,15 +5,56 @@
     "title": "Shenaas Marketing Agency",
     "visit_text": "Visit",
     "url": "https://shenaas.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/hope.webp",
+    "title": "The hope project",
+    "visit_text": "Visit",
+    "url": "https://afghanstreetkids.org/",
     "category": "Pure"
   },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/ashford.webp",
+    "title": "Quick ashford",
+    "visit_text": "Visit",
+    "url": "https://quickashford.com/",
+    "category": "wordpress"
+  },
+   {
+    "id": 0,
+    "image": "img/portfo_pics/easy.webp",
+    "title": "Easy storage",
+    "visit_text": "Visit",
+    "url": "https://easystorage.ae/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/mib.webp",
+    "title": "MIB Sport",
+    "visit_text": "Visit",
+    "url": "https://mibsport.com/",
+    "category": "wordpress"
+  },
+{
+    "id": 0,
+    "image": "img/portfo_pics/sultan.webp",
+    "title": "Sultan taza",
+    "visit_text": "Visit",
+    "url": "https://sultantaza.com/",
+    "category": "wordpress"
+  },
+
   {
     "id": 0,
     "image": "img/portfo_pics/saiah.webp",
     "title": "Saiah Art Gallery",
     "visit_text": "Visit",
     "url": "https://saiahartgallery.com/",
-    "category": "Pure"
+    "category": "wordpress"
   },
   {
     "id": 0,
@@ -21,6 +62,38 @@
     "title": "Seidenstrasse Restaurant",
     "visit_text": "Visit",
     "url": "https://seidenstrasse.restaurant",
+    "category": "Pure"
+  },
+  {
+    "id": 5,
+    "image": "img/portfo_pics/obrang.webp",
+    "title": "Obrang Media",
+    "visit_text": "Visit",
+    "url": "https://obrangv2.obrang.com",
+    "category": "pure"
+  },
+  {
+    "id": 8,
+    "image": "img/portfo_pics/scholar.webp",
+    "title": "Scholar",
+    "visit_text": "Visit",
+    "url": "https://scholar.saiahartgallery.com/",
+    "category": "pure"
+  },
+  {
+    "id": 10,
+    "image": "img/portfo_pics/bp.webp",
+    "title": "Bright point plus",
+    "visit_text": "Visit",
+    "url": "https://www.brightpoint.consulting/",
+    "category": "pure"
+  },
+  {
+    "id": 1,
+    "image": "img/portfo_pics/rashha.webp",
+    "title": "Rashha Design",
+    "visit_text": "Visit",
+    "url": "https://rashhadesign.com",
     "category": "Pure"
   },
   {
@@ -32,13 +105,14 @@
     "category": "Pure"
   },
   {
-    "id": 1,
-    "image": "img/portfo_pics/rashha.webp",
-    "title": "Rashha Design",
+    "id": 3,
+    "image": "img/portfo_pics/kamadc.webp",
+    "title": "Kamadc",
     "visit_text": "Visit",
-    "url": "https://rashhadesign.com",
-    "category": "Pure"
+    "url": "https://www.kamadc.obrang.com/",
+    "category": "wordpress"
   },
+
   {
     "id": 2,
     "image": "img/portfo_pics/lbtak.webp",
@@ -64,14 +138,6 @@
     "category": "wordpress"
   },
   {
-    "id": 5,
-    "image": "img/portfo_pics/obrang.webp",
-    "title": "Obrang Media",
-    "visit_text": "Visit",
-    "url": "https://obrangv2.obrang.com",
-    "category": "pure"
-  },
-  {
     "id": 6,
     "image": "img/portfo_pics/j4p.webp",
     "title": "Jobs 4 peace",
@@ -87,14 +153,7 @@
     "url": "https://bb04.netlify.app/",
     "category": "pure"
   },
-  {
-    "id": 8,
-    "image": "img/portfo_pics/scholar.webp",
-    "title": "Scholar",
-    "visit_text": "Visit",
-    "url": "https://scholar.saiahartgallery.com/",
-    "category": "pure"
-  },
+
   {
     "id": 9,
     "image": "img/portfo_pics/cpp6.webp",
@@ -103,12 +162,13 @@
     "url": "https://cpp6.netlify.app",
     "category": "pure"
   },
+
   {
-    "id": 10,
-    "image": "img/portfo_pics/bp.webp",
-    "title": "Bright point plus",
+    "id": 12,
+    "image": "img/portfo_pics/sparker.webp",
+    "title": "Research sparker  ",
     "visit_text": "Visit",
-    "url": "https://www.brightpoint.consulting/",
-    "category": "pure"
+    "url": "https://researchsparker.com/",
+    "category": "ojs"
   }
 ]
