@@ -1,13 +1,53 @@
 [
   {
     "id": 0,
+    "image": "img/portfo_pics/storage.webp",
+    "title": "Storage MIS (Local)",
+    "visit_text": "Visit",
+    "url": "#",
+    "category": "pure"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/multilex.webp",
+    "title": "MultilexBPO",
+    "visit_text": "Visit",
+    "url": "https://multilexbpo.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/kaboora.webp",
+    "title": "Kaboora",
+    "visit_text": "Visit",
+    "url": "https://kaboorarestaurant.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/shereads.webp",
+    "title": "Shereads MIS (Still Local)",
+    "visit_text": "Visit",
+    "url": "#",
+    "category": "pure"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/ngo.webp",
+    "title": "Hope NGO",
+    "visit_text": "Visit",
+    "url": "https://ngo.saiahartgallery.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
     "image": "img/portfo_pics/shenaas.png",
     "title": "Shenaas Marketing Agency",
     "visit_text": "Visit",
     "url": "https://shenaas.com/",
     "category": "wordpress"
   },
-  {
+  { 
     "id": 0,
     "image": "img/portfo_pics/hope.webp",
     "title": "The hope project",

@@ -1,31 +1,51 @@
 [
   {
+    "id": 0,
+    "title": "Open Journal System (OJS)",
+    "course": "Public Knowledge Project",
+    "date": "2024",
+    "description": "Skilled in OJS after completing tutorials from the Public Knowledge Project YouTube channel. Gained expertise in managing journal systems, publishing workflows, and creating accessible academic platforms. Ready to apply these skills to enhance scholarly communication.",
+    "link": "https://www.youtube.com/@PublicKnowledgeProj"
+  },
+  {
     "id": 1,
-    "title": "PHP",
+    "title": "Laravel & Livewire",
+    "course": "AfghanAdacemy",
+    "date": "2023 / 2024",
+    "description": "Proficient in Laravel and Livewire after completing the AfghanAcademy YouTube course. Equipped with the knowledge of building modern, dynamic web applications, managing databases, and creating seamless user interfaces. Excited to apply these skills to develop innovative and efficient web solutions.",
+    "link": "https://afghanacademy.co/"
+  },
+  {
+    "id": 1,
+    "title": " The PHP Practitioner",
     "course": "Laracasts",
     "date": "2023",
-    "description": "Proficient in PHP after completing the Laracasts online course. Equipped with the knowledge of building robust backends, working with databases, and creating dynamic web applications. Excited to apply PHP skills to develop innovative web solutions."
+    "description": "Proficient in PHP after completing the Laracasts online course. Equipped with the knowledge of building robust backends, working with databases, and creating dynamic web applications. Excited to apply PHP skills to develop innovative web solutions.",
+    "link": "https://laracasts.com/series/php-for-beginners"
   },
   {
     "id": 2,
     "title": "Javascript & Reactjs",
     "course": "Scrimba",
     "date": "2023",
-    "description":  "Skilled in JavaScript and React.js, completed Scrimba's online course. Passionate about crafting dynamic user interfaces and using modern web technologies for creating engaging applications."
+    "description":  "Skilled in JavaScript and React.js, completed Scrimba's online course. Passionate about crafting dynamic user interfaces and using modern web technologies for creating engaging applications.",
+    "link": "https://scrimba.com/frontend-path-c0j"
   },
   {
     "id": 3,
-    "title": "Ceritfy In DEL & EFL",
-    "course": "Cambridge International Organization",
-    "date": "2019 - 2020",
-    "description":  "Cambridge International EFL certified, proficient in English language skills. Experienced in language acquisition and comprehension, eager to contribute language expertise and promote effective communication."
-  },
-  {
-    "id": 4,
     "title": "Bachlor In CSE",
     "course": "Allamah University",
     "date": "2019 - 2023",
-    "description":  "Bachelor's in Computer Science (Software Engineering) graduate with a passion for creating innovative software solutions. Skilled in coding, problem-solving, and collaborating on diverse projects. Excited to contribute to the tech industry's growth and impact."
+    "description":  "Bachelor's in Computer Science (Software Engineering) graduate with a passion for creating innovative software solutions. Skilled in coding, problem-solving, and collaborating on diverse projects. Excited to contribute to the tech industry's growth and impact.",
+    "link": "https://allamah.edu.af/"
+  },
+  {
+    "id": 4,
+    "title": "Ceritfy In DEL & EFL",
+    "course": "Cambridge International Organization",
+    "date": "2019 - 2020",
+    "description":  "Cambridge International EFL certified, proficient in English language skills. Experienced in language acquisition and comprehension, eager to contribute language expertise and promote effective communication.",
+    "link": "https://www.facebook.com/CambridgeInternationalOrganization/"
   }
 
 
