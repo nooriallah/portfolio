@@ -3,7 +3,7 @@
         "id": 1,
         "icon": "fa fa-laptop",
         "title": "Front-end development",
-        "description": "Front-end expert: Responsive websites, captivating designs, seamless UX. HTML, CSS, JavaScript, React.js. Elevate your online presence."
+        "description": "Responsive websites, captivating designs, seamless UX. HTML, CSS, JavaScript, React.js. Elevate your online presence."
     },
     {
         "id": 2,
@@ -21,12 +21,18 @@
         "id": 4,
         "icon": "fa fa-search",
         "title": "SEO Optimazation",
-        "description": "SEO Pro: Skyrocket your website's visibility and attract more organic traffic. Unleash the potential of SEO optimization for your business success."
+        "description": "Skyrocket your website's visibility and attract more organic traffic. Unleash the potential of SEO optimization for your business success."
     },
     {
         "id": 5,
-        "icon": "fa fa-edit",
+        "icon": "fa fa-bar-chart",
         "title": "MIS Development",
-        "description": "MIS Developer: Streamline your business processes with efficient MIS solutions. Automate data management and boost productivity."
+        "description": "Streamline your business processes with efficient MIS solutions. Automate data management and boost productivity."
+    },
+    {
+        "id": 6,
+        "icon": "fa fa-edit",
+        "title": "Update & Maintenance ",
+        "description": "Simplify your online presence with trustworthy services for website upkeep and updates.  Easily maintain security and keep material current."
     }
 ]

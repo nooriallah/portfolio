@@ -1,6 +1,14 @@
 [
   {
     "id": 0,
+    "image": "img/portfo_pics/abuud.webp",
+    "title": "Abuud",
+    "visit_text": "Visit",
+    "url": "https://abuud.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
     "image": "img/portfo_pics/storage.webp",
     "title": "Storage MIS (Local)",
     "visit_text": "Visit",
