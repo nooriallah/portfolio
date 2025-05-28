@@ -186,6 +186,14 @@
     "category": "wordpress"
   },
   {
+    "id": 4,
+    "image": "img/portfo_pics/avaac.webp",
+    "title": "Ava Academy",
+    "visit_text": "Visit",
+    "url": "https://avaacademy.org/",
+    "category": "wordpress"
+  },
+  {
     "id": 6,
     "image": "img/portfo_pics/j4p.webp",
     "title": "Jobs 4 peace",
