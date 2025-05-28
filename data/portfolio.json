@@ -152,16 +152,7 @@
     "url": "https://mahamtejaratarshin.com/",
     "category": "Pure"
   },
-  {
-    "id": 3,
-    "image": "img/portfo_pics/kamadc.webp",
-    "title": "Kamadc",
-    "visit_text": "Visit",
-    "url": "https://www.kamadc.obrang.com/",
-    "category": "wordpress"
-  },
-
-  {
+    {
     "id": 2,
     "image": "img/portfo_pics/lbtak.webp",
     "title": "LBtak",
@@ -224,7 +215,7 @@
     "image": "img/portfo_pics/sparker.webp",
     "title": "Research sparker  ",
     "visit_text": "Visit",
-    "url": "https://researchsparker.com/",
+    "url": "https://researchsparker.edu.af/",
     "category": "ojs"
   }
 ]
