@@ -1,0 +1,44 @@
+{
+    "frontend": [
+        {
+            "id": 1,
+            "title": "HTML, CSS, BOOTSTRAP",
+            "percent": "90%",
+            "color": "primary"
+        },
+        {
+            "id": 1,
+            "title": "HTML, CSS, BOOTSTRAP",
+            "percent": "90%",
+            "color": "primary"
+        },
+        {
+            "id": 1,
+            "title": "HTML, CSS, BOOTSTRAP",
+            "percent": "90%",
+            "color": "primary"
+        },
+        {
+            "id": 1,
+            "title": "HTML, CSS, BOOTSTRAP",
+            "percent": "90%",
+            "color": "primary"
+        }
+    ],
+    "backend": [
+        {
+            "id": 1,
+            "title": "PHP, Laravel, LiveWire, MySQL",
+            "percent": "90%",
+            "color": "primary"
+        }
+    ],
+    "CMS": [
+        {
+            "id": 1,
+            "title": "Back(endPHP, Laravel, LiveWire, MySQL",
+            "percent": "90%",
+            "color": "primary"
+        }
+    ]
+}

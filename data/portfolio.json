@@ -1,6 +1,46 @@
 [
   {
     "id": 0,
+    "image": "img/portfo_pics/shenaas.png",
+    "title": "Shenaas Marketing Agency",
+    "visit_text": "Visit",
+    "url": "https://shenaas.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/meloni.webp",
+    "title": "Melloni24",
+    "visit_text": "Visit",
+    "url": "https://melloni24.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/amanzada.webp",
+    "title": "Amanzada perfumes",
+    "visit_text": "Visit",
+    "url": "https://amanzadaperfumes.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/afginf.webp",
+    "title": "Afghan influencer",
+    "visit_text": "Visit",
+    "url": "https://afghaninfluencer.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/ddose.webp",
+    "title": "Daily Dose",
+    "visit_text": "Visit",
+    "url": "https://dailydose.af/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
     "image": "img/portfo_pics/abuud.webp",
     "title": "Abuud",
     "visit_text": "Visit",
@@ -45,14 +85,6 @@
     "title": "Hope NGO",
     "visit_text": "Visit",
     "url": "https://ngo.saiahartgallery.com/",
-    "category": "wordpress"
-  },
-  {
-    "id": 0,
-    "image": "img/portfo_pics/shenaas.png",
-    "title": "Shenaas Marketing Agency",
-    "visit_text": "Visit",
-    "url": "https://shenaas.com/",
     "category": "wordpress"
   },
   { 

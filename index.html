@@ -60,7 +60,7 @@
           <!-- <a href="#contact" class="btn btn-outline-primary d-none d-lg-block">Hire Me</a> -->
         </div>
       </div>
-    </nav>
+    </nav> 
     <!-- Navbar End -->
 
     <!-- Video Modal Start -->
@@ -127,7 +127,7 @@
               class="typed-text-output d-inline font-weight-lighter text-white"
             ></h1>
             <div class="typed-text d-none">
-              Front-End Developer, Back-End Developer, Software Engineer
+              Web developer, Programmer, Freelancer
             </div>
             <div
               class="d-flex align-items-center justify-content-center justify-content-lg-start flex-column flex-md-row pt-5"
@@ -187,7 +187,7 @@
           <div class="col-lg-7">
             <h3 class="mb-4">Web Developer & Programmer</h3>
             <p>
-              Creative web application developer specializing in front-end and
+              Creative web application developer specializing in front-end and a little
               back-end development. familiar with plenty technologies of the
               development cycle for web application projects. well-versed in
               numerous programming languages, frame-works, MIS systems and
@@ -420,7 +420,20 @@
           </h1>
         </div>
 
-        <div class="row align-items-center">
+        <div class="row align-items-center" id="skill_container">
+
+          <script>
+            let skill_container = document.getElementById("skill_container")
+
+            var skills = fetch("./data/skills.json").then((resp) => {
+              return resp.json()
+            })
+            
+            
+
+
+          </script>
+
           <div class="col-md-6">
             <div class="skill mb-4">
               <div class="d-flex justify-content-between">
@@ -639,6 +652,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

@@ -2,32 +2,21 @@
     {
         "id": 1,
         "icon": "fa fa-laptop",
-        "title": "Front-end development",
+        "title": "Pure code websites",
         "description": "Responsive websites, captivating designs, seamless UX. HTML, CSS, JavaScript, React.js. Elevate your online presence."
     },
-    {
-        "id": 2,
-        "icon": "fa fa-laptop-code",
-        "title": "Back-end development",
-        "description": "Transforming ideas into reality. From front-end to back-end, I create powerful and dynamic websites. Let's build your digital success."
-    },
-    {
+        {
         "id": 3,
         "icon": "fab fa-android",
         "title": "Wordpress website",
         "description": "Crafting stunning and user-friendly websites with the power of Wordpress. Elevate your online presence and boost your business."
     },
-    {
-        "id": 4,
-        "icon": "fa fa-search",
-        "title": "SEO Optimazation",
-        "description": "Skyrocket your website's visibility and attract more organic traffic. Unleash the potential of SEO optimization for your business success."
-    },
+    
     {
         "id": 5,
-        "icon": "fa fa-bar-chart",
-        "title": "MIS Development",
-        "description": "Streamline your business processes with efficient MIS solutions. Automate data management and boost productivity."
+        "icon": "fa fa-cloud",
+        "title": "Hosting & Domain Setup",
+        "description": "I set up and manage VPS hosting, domains, DNS, and emails to keep your website secure, fast, and always online."
     },
     {
         "id": 6,
