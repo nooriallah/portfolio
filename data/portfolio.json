@@ -1,6 +1,46 @@
 [
   {
     "id": 0,
+    "image": "img/portfo_pics/tamveel.webp",
+    "title": "Business consultancy",
+    "visit_text": "Visit",
+    "url": "https://tamveel.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/noorzadconst.webp",
+    "title": "Construction company",
+    "visit_text": "Visit",
+    "url": "https://noorzad.kifora.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/noorzadfound.webp",
+    "title": "Foundation charity",
+    "visit_text": "Visit",
+    "url": "https://noorzadfound.pamir121.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/pamir121.webp",
+    "title": "Cosmatic Store",
+    "visit_text": "Visit",
+    "url": "https://pamir121.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
+    "image": "img/portfo_pics/loiisflowers.webp",
+    "title": "Flower store in Dubai",
+    "visit_text": "Visit",
+    "url": "https://loiisflowers.com/",
+    "category": "wordpress"
+  },
+  {
+    "id": 0,
     "image": "img/portfo_pics/shenaas.png",
     "title": "Shenaas Marketing Agency",
     "visit_text": "Visit",
@@ -105,7 +145,7 @@
   },
    {
     "id": 0,
-    "image": "img/portfo_pics/easy.webp",
+    "image": "img/portfo_pics/easystorage.webp",
     "title": "Easy storage",
     "visit_text": "Visit",
     "url": "https://easystorage.ae/",
