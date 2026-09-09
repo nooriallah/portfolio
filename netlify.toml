@@ -1,0 +1,11 @@
+# netlify.toml — Netlify build settings for the Next.js site.
+# Netlify detects Next.js automatically and uses its Next runtime; this file
+# just pins the build command and publish folder so deploys are predictable.
+# Environment variables (DATABASE_URL, AUTH_SECRET, CLOUDINARY_*) are set in
+# Netlify → Site settings → Environment variables, NOT here.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

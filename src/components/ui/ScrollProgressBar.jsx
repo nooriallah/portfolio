@@ -1,3 +1,4 @@
+"use client";
 import { usePageProgress } from "../../hooks/useScrollProgress.js";
 import { useLang } from "../i18n/LanguageProvider.jsx";
 

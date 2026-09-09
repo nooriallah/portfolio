@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NAV_IDS } from "../data/content.js";
+import { NAV_IDS } from "@/lib/cms/schema.js";
 
 export default function useScrollSpy() {
   const [scrolled, setScrolled] = useState(false);

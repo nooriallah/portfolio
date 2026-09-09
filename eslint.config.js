@@ -1,21 +1,21 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+/**
+ * eslint.config.js — ESLint (flat config) for the Next.js project.
+ * Uses the official Next.js rules (core web vitals) + React hooks rules.
+ * Run: npm run lint
+ */
+import nextVitals from "eslint-config-next/core-web-vitals";
 
-export default defineConfig([
-  globalIgnores(['dist']),
+const config = [
+  ...nextVitals,
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
-    languageOptions: {
-      globals: globals.browser,
-      parserOptions: { ecmaFeatures: { jsx: true } },
+    ignores: [".next/**", "node_modules/**", "drizzle/**", "dist/**", ".drop/**"],
+  },
+  {
+    rules: {
+      // Plain <img> is used on purpose for the 43+ external/legacy screenshots.
+      "@next/next/no-img-element": "off",
     },
   },
-])
+];
+
+export default config;

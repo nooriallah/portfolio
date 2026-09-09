@@ -1,3 +1,4 @@
+"use client";
 import { ChevronUp } from "lucide-react";
 import { scrollToId } from "../utils/scroll";
 

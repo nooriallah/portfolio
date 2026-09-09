@@ -1,6 +1,13 @@
+"use client";
+/**
+ * src/components/Experience.jsx — EXPERIENCE & EDUCATION timelines.
+ * Two columns; the accent line is drawn by the scroll itself.
+ * Entries: /admin → Experience & Education (kind = work | education).
+ * Column headings: /admin → Section titles.
+ */
 import Section from "./ui/Section.jsx";
 import Reveal from "./ui/Reveal.jsx";
-import useScrollProgress from "../hooks/useScrollProgress.js";
+import useScrollProgress from "@/hooks/useScrollProgress.js";
 import { useLang } from "./i18n/LanguageProvider.jsx";
 
 /**
@@ -31,7 +38,7 @@ function Timeline({ heading, list }) {
 
         <div className="space-y-8">
           {list.map((item, i) => (
-            <Reveal key={i} delay={i * 110}>
+            <Reveal key={item.id ?? i} delay={i * 110}>
               <div className="relative">
                 <span
                   className="absolute -start-[27px] top-1 w-3 h-3 rounded-full bg-accent ring-4 ring-accent/20"
@@ -45,7 +52,7 @@ function Timeline({ heading, list }) {
                 <h4 className="text-heading font-bold mt-1">{item.title}</h4>
                 <p className="text-sm text-faint">{item.place}</p>
                 <p className="text-sm text-muted mt-1 leading-relaxed">
-                  {item.desc}
+                  {item.description}
                 </p>
               </div>
             </Reveal>
@@ -59,20 +66,20 @@ function Timeline({ heading, list }) {
 export default function Experience() {
   const { t } = useLang();
   const columns = [
-    [t.experience.heading, t.experience.items],
-    [t.education.heading, t.education.items],
+    [t.sections.experienceHeading, t.experience],
+    [t.sections.educationHeading, t.education],
   ];
 
   return (
     <Section
       id="experience"
-      eyebrow={t.sections.experience.eyebrow}
-      title={t.sections.experience.title}
+      eyebrow={t.sections.experienceEyebrow}
+      title={t.sections.experienceTitle}
       aura="left"
     >
       <div className="grid md:grid-cols-2 gap-12">
-        {columns.map(([heading, list]) => (
-          <Timeline key={heading} heading={heading} list={list} />
+        {columns.map(([heading, list], i) => (
+          <Timeline key={i} heading={heading} list={list ?? []} />
         ))}
       </div>
     </Section>

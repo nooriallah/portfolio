@@ -1,6 +1,13 @@
+"use client";
+/**
+ * src/components/Navbar.jsx — FIXED HEADER: logo, section links, theme +
+ * language switch, "Hire me" button, mobile menu, reading-progress hairline.
+ * Nav labels come from /admin → Navigation (t.nav); section order is NAV_IDS
+ * in src/lib/cms/schema.js.
+ */
 import { useState } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
-import { NAV_IDS } from "../data/content.js";
+import { NAV_IDS } from "@/lib/cms/schema.js";
 import { scrollToId } from "../utils/scroll.js";
 import { useLang } from "./i18n/LanguageProvider.jsx";
 import LanguageSwitcher from "./LanguageSwitcher.jsx";
@@ -28,7 +35,7 @@ export default function Navbar({ scrolled, active }) {
             N
           </span>
           {/* Show only the name here not surname */}
-          {t.hero.name.split(" ")[0]}
+          {(t.hero.name || "").split(" ")[0]}
         </button>
 
         <nav className="hidden lg:flex items-center gap-1">

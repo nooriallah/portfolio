@@ -1,3 +1,9 @@
+/**
+ * src/data/projects.js — LEGACY PROJECT LIST (seed source only).
+ *
+ * The live site reads projects from the database (/admin → Projects).
+ * `scripts/seed.mjs` uses this file once to fill the `projects` table.
+ */
 export const projects = [
   {
     title: "Simple Studio",

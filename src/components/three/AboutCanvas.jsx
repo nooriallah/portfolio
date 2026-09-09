@@ -1,8 +1,14 @@
-import { Component, Suspense, lazy, useEffect, useRef, useState } from "react";
+"use client";
+/**
+ * src/components/three/AboutCanvas.jsx — the About section's 3D scene wrapper
+ * (character with laptop). Loaded client-side only via next/dynamic.
+ */
+import { Component, Suspense, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import useDeviceTier from "../../hooks/useDeviceTier.js";
 import { useTheme } from "../ThemeProvider.jsx";
 
-const LaptopStage = lazy(() => import("./LaptopStage.jsx"));
+const LaptopStage = dynamic(() => import("./LaptopStage.jsx"), { ssr: false });
 
 class SceneBoundary extends Component {
   constructor(props) {
@@ -13,7 +19,7 @@ class SceneBoundary extends Component {
     return { failed: true };
   }
   componentDidCatch(error) {
-    if (import.meta.env.DEV) console.warn("[about] 3D scene disabled:", error);
+    if (process.env.NODE_ENV !== "production") console.warn("[about] 3D scene disabled:", error);
   }
   render() {
     return this.state.failed ? this.props.fallback : this.props.children;

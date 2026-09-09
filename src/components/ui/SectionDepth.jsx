@@ -1,3 +1,4 @@
+"use client";
 import useParallax, { useDrift } from "../../hooks/useParallax.js";
 
 /**

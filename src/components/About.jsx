@@ -1,10 +1,20 @@
+"use client";
+/**
+ * src/components/About.jsx — ABOUT SECTION.
+ *
+ * Left: the 3D character-with-laptop scene (AboutCanvas); the photo from
+ * /admin → Site → "About photo" is the fallback for reduced-motion, low-power
+ * and no-WebGL visitors.
+ * Right: heading, paragraph and the quick-facts grid.
+ *
+ * Texts: /admin → About (t.about). Section title: /admin → Section titles.
+ */
 import Section from "./ui/Section.jsx";
 import Reveal from "./ui/Reveal.jsx";
 import Tilt from "./ui/Tilt.jsx";
 import Stagger from "./ui/Stagger.jsx";
 import AboutCanvas from "./three/AboutCanvas.jsx";
-import useParallax from "../hooks/useParallax.js";
-import { IMG } from "../data/content.js";
+import useParallax from "@/hooks/useParallax.js";
 import { useLang } from "./i18n/LanguageProvider.jsx";
 
 export default function About() {
@@ -13,34 +23,36 @@ export default function About() {
   // them in depth as you scroll past.
   const media = useParallax(0.17);
   const copy = useParallax(-0.07);
+  const facts = t.about.facts ?? [];
 
   return (
     <Section
       id="about"
-      eyebrow={t.sections.about.eyebrow}
-      title={t.sections.about.title}
+      eyebrow={t.sections.aboutEyebrow}
+      title={t.sections.aboutTitle}
       aura="right"
     >
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div ref={media} className="flex justify-center">
           <Reveal from="scale">
-            {/* The 3D presenting scene; the original photo remains the
-                fallback for reduced-motion / low-power / no-WebGL visitors. */}
+            {/* The 3D presenting scene; the photo remains the fallback. */}
             <AboutCanvas
               fallback={
-                <Tilt max={7} scale={1.02} lift={12} perspective={1200}>
-                  <div className="relative [transform-style:preserve-3d]">
-                    <div
-                      className="absolute inset-0 rounded-2xl border border-accent/30"
-                      style={{ transform: "translateZ(-22px) scale(1.06)" }}
-                    />
-                    <img
-                      src={IMG.about}
-                      alt=""
-                      className="relative rounded-2xl border border-line w-full max-w-sm object-cover shadow-xl shadow-black/10"
-                    />
-                  </div>
-                </Tilt>
+                t.site.aboutImage ? (
+                  <Tilt max={7} scale={1.02} lift={12} perspective={1200}>
+                    <div className="relative [transform-style:preserve-3d]">
+                      <div
+                        className="absolute inset-0 rounded-2xl border border-accent/30"
+                        style={{ transform: "translateZ(-22px) scale(1.06)" }}
+                      />
+                      <img
+                        src={t.site.aboutImage}
+                        alt=""
+                        className="relative rounded-2xl border border-line w-full max-w-sm object-cover shadow-xl shadow-black/10"
+                      />
+                    </div>
+                  </Tilt>
+                ) : null
               }
             />
           </Reveal>
@@ -53,15 +65,16 @@ export default function About() {
             </h3>
             <p className="text-muted leading-relaxed mb-6">{t.about.text}</p>
           </Reveal>
+          {/* Quick facts — /admin → About → Quick facts */}
           <Stagger
             step={70}
             start={120}
             className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm"
           >
-            {t.about.facts.map(([k, v]) => (
-              <div key={k}>
-                <span className="text-faint">{k}</span>
-                <p className="text-heading font-medium break-words">{v}</p>
+            {facts.map((f, i) => (
+              <div key={i}>
+                <span className="text-faint">{f.label}</span>
+                <p className="text-heading font-medium break-words">{f.value}</p>
               </div>
             ))}
           </Stagger>

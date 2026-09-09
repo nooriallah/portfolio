@@ -1,6 +1,7 @@
+"use client";
 import { useState } from "react";
 import { Languages, Check, ChevronDown } from "lucide-react";
-import { LANGUAGES } from "./i18n/translations.js";
+import { LANGUAGES } from "@/lib/cms/schema.js";
 import { useLang } from "./i18n/LanguageProvider.jsx";
 
 export default function  LanguageSwitcher() {

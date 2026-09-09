@@ -1,3 +1,10 @@
+/**
+ * src/components/i18n/translations.js — LEGACY TEXTS (seed source only).
+ *
+ * The live site no longer reads this file: all texts come from the database
+ * and are edited in /admin. `scripts/seed.mjs` reads this file ONCE to fill
+ * the database the first time. You can delete it after seeding if you like.
+ */
 export const LANGUAGES = [
   { code: "en", label: "English", dir: "ltr" },
   { code: "fa", label: "فارسی", dir: "rtl" },

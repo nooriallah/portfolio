@@ -1,9 +1,17 @@
-import { Component, Suspense, lazy, useEffect, useRef, useState } from "react";
+"use client";
+/**
+ * src/components/three/HeroCanvas.jsx — the hero's 3D layer wrapper.
+ * The heavy WebGL scene (HeroScene.jsx, three.js) is loaded with
+ * next/dynamic + ssr:false, so it is never rendered on the server and only
+ * downloaded on devices that pass useDeviceTier.
+ */
+import { Component, Suspense, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import useDeviceTier from "../../hooks/useDeviceTier.js";
 import { useTheme } from "../ThemeProvider.jsx";
 import { useLang } from "../i18n/LanguageProvider.jsx";
 
-const HeroScene = lazy(() => import("./HeroScene.jsx"));
+const HeroScene = dynamic(() => import("./HeroScene.jsx"), { ssr: false });
 
 /**
  * If WebGL dies, the chunk fails to load, or three.js is missing, the hero
@@ -18,7 +26,7 @@ class SceneBoundary extends Component {
     return { failed: true };
   }
   componentDidCatch(error) {
-    if (import.meta.env.DEV) console.warn("[hero] 3D scene disabled:", error);
+    if (process.env.NODE_ENV !== "production") console.warn("[hero] 3D scene disabled:", error);
   }
   render() {
     return this.state.failed ? null : this.props.children;

@@ -1,24 +1,32 @@
+"use client";
+/**
+ * src/components/Work.jsx — SELECTED WORK (project grid with pagination).
+ *
+ * Each card: numbered badge, screenshot, hover overlay with the title,
+ * category / technologies and "Visit website" when a live URL exists.
+ * Projects: /admin → Projects (t.projects, only published ones).
+ * Per-page count + texts: /admin → Section titles (workPerPage, workVisit, workNote).
+ */
 import { useState } from "react";
 import Section from "./ui/Section.jsx";
 import Reveal from "./ui/Reveal.jsx";
 import Tilt from "./ui/Tilt.jsx";
 import Pagination from "./ui/Pagination.jsx";
-import { projects } from "../data/projects.js";
-import { scrollToId } from "../utils/scroll.js";
+import { scrollToId } from "@/utils/scroll.js";
 import { useLang } from "./i18n/LanguageProvider.jsx";
-
-const PER_PAGE = 9;
 
 export default function Work() {
   const { t } = useLang();
+  const projects = t.projects ?? [];
+  const perPage = Number(t.sections.workPerPage) > 0 ? Number(t.sections.workPerPage) : 9;
   const [page, setPage] = useState(0);
 
-  const pages = Math.max(1, Math.ceil(projects.length / PER_PAGE));
+  const pages = Math.max(1, Math.ceil(projects.length / perPage));
   // Clamped rather than stored raw, so the section cannot land on an empty
   // page if the project list ever shrinks.
   const current = Math.min(page, pages - 1);
-  const start = current * PER_PAGE;
-  const visible = projects.slice(start, start + PER_PAGE);
+  const start = current * perPage;
+  const visible = projects.slice(start, start + perPage);
 
   const goTo = (next) => {
     setPage(next);
@@ -29,21 +37,20 @@ export default function Work() {
   return (
     <Section
       id="work"
-      eyebrow={t.sections.work.eyebrow}
-      title={t.sections.work.title}
+      eyebrow={t.sections.workEyebrow}
+      title={t.sections.workTitle}
       className="bg-section"
       aura="left"
     >
       {/* Keyed by page so the cards remount and play their entrance again —
           a page turn that swaps content silently reads as broken. */}
-      <div
-        key={current}
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
+      <div key={current} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {visible.map((p, i) => {
           // Numbering follows the full list, not the page, so a project keeps
           // the same number wherever it appears.
           const number = start + i + 1;
+          // Small line under the title: technologies if set, else the category.
+          const meta = p.tech?.length ? p.tech.join(" · ") : p.category;
 
           const card = (
             <Tilt
@@ -74,9 +81,19 @@ export default function Work() {
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 p-4 text-center bg-accent/85 backdrop-blur-[2px] opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100 transition-all duration-500 ease-out">
                   <div style={{ transform: "translateZ(26px)" }}>
                     <h3 className="text-lg font-bold text-white">{p.title}</h3>
+                    {p.description && (
+                      <p className="mt-1 text-sm text-white/90 line-clamp-3">
+                        {p.description}
+                      </p>
+                    )}
+                    {meta && (
+                      <p className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-white/80">
+                        {meta}
+                      </p>
+                    )}
                     {p.url && (
-                      <span className="mt-1 block text-sm text-white/90 underline underline-offset-4">
-                        {t.sections.work.visit}
+                      <span className="mt-2 block text-sm text-white/90 underline underline-offset-4">
+                        {t.sections.workVisit}
                       </span>
                     )}
                   </div>
@@ -86,7 +103,7 @@ export default function Work() {
           );
 
           return (
-            <Reveal key={p.title} delay={(i % 3) * 110} from="tilt">
+            <Reveal key={p.id} delay={(i % 3) * 110} from="tilt">
               {p.url ? (
                 <a
                   href={p.url}
@@ -109,9 +126,13 @@ export default function Work() {
         page={current}
         pages={pages}
         onChange={goTo}
-        label={t.sections.work.title}
+        label={t.sections.workTitle}
         range={[start + 1, start + visible.length, projects.length]}
       />
+
+      {t.sections.workNote && (
+        <p className="mt-8 text-center text-sm text-faint">{t.sections.workNote}</p>
+      )}
     </Section>
   );
 }

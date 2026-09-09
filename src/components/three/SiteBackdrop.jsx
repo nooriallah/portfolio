@@ -1,8 +1,14 @@
-import { Component, Suspense, lazy, useEffect, useState } from "react";
+"use client";
+/**
+ * src/components/three/SiteBackdrop.jsx — the fixed orb behind the whole
+ * site. Loaded client-side only via next/dynamic.
+ */
+import { Component, Suspense, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import useDeviceTier from "../../hooks/useDeviceTier.js";
 import { useTheme } from "../ThemeProvider.jsx";
 
-const BackdropScene = lazy(() => import("./BackdropScene.jsx"));
+const BackdropScene = dynamic(() => import("./BackdropScene.jsx"), { ssr: false });
 
 class Boundary extends Component {
   constructor(props) {
@@ -13,7 +19,7 @@ class Boundary extends Component {
     return { failed: true };
   }
   componentDidCatch(error) {
-    if (import.meta.env.DEV) console.warn("[backdrop] disabled:", error);
+    if (process.env.NODE_ENV !== "production") console.warn("[backdrop] disabled:", error);
   }
   render() {
     return this.state.failed ? null : this.props.children;

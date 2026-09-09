@@ -1,3 +1,4 @@
+"use client";
 import Reveal from "./Reveal.jsx";
 import SplitText from "./SplitText.jsx";
 import SectionDepth from "./SectionDepth.jsx";

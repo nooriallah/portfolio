@@ -1,8 +1,12 @@
+"use client";
+/**
+ * src/components/Reviews.jsx — CLIENT TESTIMONIALS (three tilting cards).
+ * Items: /admin → Reviews (only published ones are shown).
+ */
 import { Quote } from "lucide-react";
 import Section from "./ui/Section.jsx";
 import Reveal from "./ui/Reveal.jsx";
 import Tilt from "./ui/Tilt.jsx";
-import { reviewMeta } from "../data/content.js";
 import { useLang } from "./i18n/LanguageProvider.jsx";
 
 export default function Reviews() {
@@ -11,16 +15,15 @@ export default function Reviews() {
   return (
     <Section
       id="reviews"
-      eyebrow={t.sections.reviews.eyebrow}
-      title={t.sections.reviews.title}
+      eyebrow={t.sections.reviewsEyebrow}
+      title={t.sections.reviewsTitle}
       className="bg-section"
       aura="right"
     >
       <div className="grid md:grid-cols-3 gap-6">
-        {reviewMeta.map((m, i) => {
-          const r = t.reviews[i];
+        {t.reviews.map((r, i) => {
           return (
-            <Reveal key={i} delay={i * 120} from="tilt">
+            <Reveal key={r.id} delay={i * 120} from="tilt">
               <Tilt
                 className="group h-full"
                 innerClassName="h-full"
@@ -42,15 +45,21 @@ export default function Reviews() {
                     className="flex items-center gap-3 mt-5 pt-5 border-t border-line-soft"
                     style={{ transform: "translateZ(14px)" }}
                   >
-                    <img
-                      src={m.img}
-                      alt={m.name}
-                      loading="lazy"
-                      className="w-11 h-11 rounded-full object-cover"
-                    />
+                    {r.image ? (
+                      <img
+                        src={r.image}
+                        alt={r.name}
+                        loading="lazy"
+                        className="w-11 h-11 rounded-full object-cover"
+                      />
+                    ) : (
+                      <span className="grid place-items-center w-11 h-11 rounded-full bg-accent/10 text-accent font-bold">
+                        {r.name?.[0]}
+                      </span>
+                    )}
                     <div>
                       <p className="text-heading font-semibold text-sm">
-                        {m.name}
+                        {r.name}
                       </p>
                       <p className="text-xs text-faint">{r.role}</p>
                     </div>
