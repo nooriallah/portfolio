@@ -15,6 +15,7 @@
  *   saveItem(collection, id, fd)      – create / update a row in a collection
  *   deleteItem(collection, id)        – delete a row
  *   moveItem(collection, id, dir)     – reorder (swap `sort` with a neighbour)
+ *   reorderItems(collection, ids)     – save a whole new order (drag & drop)
  *   markMessageRead / deleteMessage   – inbox
  *   changePassword(fd)                – admin account
  */
@@ -108,8 +109,16 @@ export async function saveItem(collection, id, _prev, fd) {
 
   if (id) {
     await db.update(table).set(values).where(eq(table.id, Number(id)));
+  } else if (def.newestFirst) {
+    // This collection is marked `newestFirst: true` in src/lib/cms/schema.js
+    // (Projects is), so a new row is placed at the TOP: one step below the
+    // smallest sort value currently in the table.
+    const [{ min }] = await db
+      .select({ min: sql`coalesce(min(${table.sort}), 0)::int` })
+      .from(table);
+    await db.insert(table).values({ ...values, sort: min - 1 });
   } else {
-    // New rows go to the end of the list.
+    // Default: new rows go to the end of the list.
     const [{ max }] = await db
       .select({ max: sql`coalesce(max(${table.sort}), -1)::int` })
       .from(table);
@@ -158,6 +167,46 @@ export async function moveItem(collection, id, dir) {
 
   bustContent();
   revalidatePath(`/admin/${collection}`);
+}
+
+/**
+ * reorderItems(collection, orderedIds)
+ *
+ * Save a whole new order at once — this is what the drag-and-drop list in
+ * /admin/projects (and every other collection list) calls when you drop a row.
+ * `orderedIds` is the list of row ids in the order they should appear, top
+ * first; each row's `sort` becomes its position in that array (0, 1, 2 …).
+ *
+ * It is done as ONE SQL statement (UPDATE … FROM (VALUES …)) instead of one
+ * update per row, so dragging stays fast even over a remote Neon database.
+ */
+export async function reorderItems(collection, orderedIds) {
+  await requireAdmin();
+  const { table } = collectionOf(collection);
+
+  // Only keep clean integers — never trust ids coming from the browser.
+  const ids = (Array.isArray(orderedIds) ? orderedIds : [])
+    .map((v) => Number(v))
+    .filter((v) => Number.isInteger(v) && v > 0);
+  if (ids.length === 0) return { ok: false, error: "Nothing to reorder" };
+
+  const db = await getDb();
+
+  // Build: (id, position) pairs → (12,0), (7,1), (30,2) …
+  const pairs = sql.join(
+    ids.map((rowId, index) => sql`(${rowId}::int, ${index}::int)`),
+    sql`, `,
+  );
+
+  await db.execute(
+    sql`UPDATE ${table} SET ${sql.identifier("sort")} = v.position
+        FROM (VALUES ${pairs}) AS v(id, position)
+        WHERE ${table.id} = v.id`,
+  );
+
+  bustContent();
+  revalidatePath(`/admin/${collection}`);
+  return { ok: true };
 }
 
 /* ------------------------------------------------------------------ *

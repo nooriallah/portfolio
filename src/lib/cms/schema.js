@@ -165,6 +165,12 @@ export const COLLECTIONS = {
     singular: "Project",
     table: "projects",
     titleField: "title",
+    // newestFirst: a newly created project is placed at the TOP of the list
+    // (and so at the top of the projects section on the public site) instead
+    // of at the bottom. Set it to false — or delete the line — to go back to
+    // adding new items at the end. You can add the same line to any other
+    // collection below (skills, services, reviews …) to get the same behaviour.
+    newestFirst: true,
     fields: [
       { name: "title", type: "i18n", label: "Title", required: true },
       { name: "description", type: "i18n-textarea", label: "Short description" },

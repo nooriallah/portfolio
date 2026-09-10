@@ -1,16 +1,24 @@
 /**
  * src/app/admin/(panel)/[collection]/page.jsx — LIST VIEW OF A COLLECTION
- * (/admin/projects, /admin/skills, …). Rows can be reordered (↑ ↓), edited, deleted.
+ * (/admin/projects, /admin/skills, …).
+ *
+ * Rows can be reordered by DRAGGING the ⠿ handle (see
+ * src/components/admin/SortableList.jsx), or one step at a time with the
+ * ↑ ↓ buttons. They can also be edited and deleted from here.
+ *
+ * This file only reads the rows from the database and hands the plain values
+ * to SortableList — all the drag behaviour and the row markup live there.
  */
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { asc } from "drizzle-orm";
-import { Plus, Pencil } from "lucide-react";
+import { Plus } from "lucide-react";
 import { getDb, schema } from "@/lib/db/index.js";
 import { COLLECTIONS } from "@/lib/cms/schema.js";
 import { pick } from "@/lib/cms/localize.js";
-import { RowActions, BTN_PRIMARY } from "@/components/admin/Forms.jsx";
+import { BTN_PRIMARY } from "@/components/admin/Forms.jsx";
 import { PageHeader } from "@/components/admin/PageHeader.jsx";
+import SortableList from "@/components/admin/SortableList.jsx";
 
 export default async function CollectionPage({ params, searchParams }) {
   const { collection } = await params;
@@ -24,11 +32,23 @@ export default async function CollectionPage({ params, searchParams }) {
 
   const hasImage = def.fields.some((f) => f.name === "image");
 
+  // Flatten each database row into the few plain values the list needs.
+  // (A client component can only receive simple values, not database rows.)
+  const listRows = rows.map((r) => ({
+    id: r.id,
+    title: pick(r[def.titleField], "en") || `#${r.id}`,
+    sub: r.category || r.key || r.kind || r.url || (r.items ? r.items.join(", ") : "") || "",
+    image: hasImage ? r.image || "" : "",
+    draft: r.published === false,
+  }));
+
   return (
     <>
       <PageHeader
         title={def.label}
-        description={`${rows.length} ${rows.length === 1 ? "item" : "items"}. Use the arrows to change the order on the site.`}
+        description={`${rows.length} ${rows.length === 1 ? "item" : "items"}. Drag the ⠿ handle to reorder — the order here is the order on the site.${
+          def.newestFirst ? " New items are added at the top." : ""
+        }`}
         action={
           <Link href={`/admin/${collection}/new`} className={BTN_PRIMARY}>
             <Plus size={16} /> New {def.singular.toLowerCase()}
@@ -38,43 +58,10 @@ export default async function CollectionPage({ params, searchParams }) {
 
       {saved && <p className="mb-4 text-sm text-accent">Saved — the site is updated.</p>}
 
-      {rows.length === 0 ? (
+      {listRows.length === 0 ? (
         <p className="text-sm text-muted">Nothing here yet.</p>
       ) : (
-        <ul className="divide-y divide-line-soft rounded-2xl border border-line bg-surface overflow-hidden">
-          {rows.map((r, i) => {
-            const title = pick(r[def.titleField], "en") || `#${r.id}`;
-            const sub =
-              r.category || r.key || r.kind || r.url || (r.items ? r.items.join(", ") : "") || "";
-            return (
-              <li key={r.id} className="flex items-center gap-4 px-4 py-3">
-                <span className="w-6 text-xs text-faint tabular-nums">{i + 1}</span>
-                {hasImage &&
-                  (r.image ? (
-                    <img src={r.image} alt="" className="w-14 h-10 rounded-md object-cover object-top border border-line bg-chip" />
-                  ) : (
-                    <span className="w-14 h-10 rounded-md border border-line bg-chip" />
-                  ))}
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-heading truncate">
-                    {title}
-                    {r.published === false && (
-                      <span className="ms-2 text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-chip text-muted">draft</span>
-                    )}
-                  </p>
-                  {sub && <p className="text-xs text-faint truncate">{sub}</p>}
-                </div>
-                <Link
-                  href={`/admin/${collection}/${r.id}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-line text-heading hover:border-accent transition"
-                >
-                  <Pencil size={14} /> Edit
-                </Link>
-                <RowActions collection={collection} id={r.id} first={i === 0} last={i === rows.length - 1} title={title} />
-              </li>
-            );
-          })}
-        </ul>
+        <SortableList collection={collection} rows={listRows} hasImage={hasImage} />
       )}
     </>
   );
