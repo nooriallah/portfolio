@@ -15,8 +15,9 @@ import { ArrowUp, ArrowDown, Trash2, Loader2, Check } from "lucide-react";
 import { FieldInput } from "./Fields.jsx";
 import { saveSettings, saveItem, deleteItem, moveItem } from "@/lib/cms/actions.js";
 
+// Amber button with dark text (colours: `.admin .btn-accent` in globals.css).
 export const BTN_PRIMARY =
-  "inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-lg bg-accent hover:opacity-90 disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition";
+  "btn-accent inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition";
 export const BTN_GHOST =
   "inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-line text-heading hover:border-accent hover:bg-chip transition";
 

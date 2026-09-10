@@ -219,3 +219,89 @@ body * {
     transform: none !important;
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * ADMIN PANEL THEME  (src/app/admin/(panel)/layout.jsx wraps everything in
+ * <div class="admin">). The public site keeps the blue tokens above; inside
+ * the admin these overrides give the dashboard its own look:
+ *   navy sidebar · soft grey page · white rounded frame · amber accent.
+ * Change admin colours HERE only.
+ * ------------------------------------------------------------------ */
+.admin {
+  --adm-page: #e9edf4;        /* grey page behind the white frame */
+  --adm-navy: #1f2b5b;        /* sidebar + dark KPI card */
+  --adm-navy-deep: #17204a;   /* sidebar bottom / hover */
+  --adm-amber: #f5a524;       /* accent: active nav, buttons, donut */
+  --adm-amber-ink: #1a1a1a;   /* text on amber */
+
+  /* re-map the shared tokens so every existing admin component follows */
+  --bg: #ffffff;              /* inputs */
+  --surface: #f6f8fc;         /* cards inside the frame */
+  --surface-strong: #eef2f9;
+  --card: #ffffff;
+  --chip: #eaeef6;
+  --line: #e1e6f0;
+  --line-soft: #edf0f6;
+  --heading: #1c2340;
+  --body: #3f4a68;
+  --muted: #6b7794;
+  --faint: #98a2bb;
+  --accent: var(--adm-amber);
+}
+
+/* Dark mode keeps the same structure with deeper surfaces. */
+:root {
+  @variant dark {
+    .admin {
+      --adm-page: #0b1020;
+      --adm-navy: #161e42;
+      --adm-navy-deep: #111735;
+      --bg: #0f1530;
+      --surface: #151c3a;
+      --surface-strong: #1a2246;
+      --card: #121a38;
+      --chip: #1e2750;
+      --line: #27305a;
+      --line-soft: #1f2849;
+      --heading: #f3f5fb;
+      --body: #c9d0e3;
+      --muted: #96a0c0;
+      --faint: #6b7597;
+    }
+  }
+}
+
+/* Primary admin button — amber with dark text (matches the reference). */
+.admin .btn-accent {
+  background: var(--adm-amber);
+  color: var(--adm-amber-ink);
+}
+.admin .btn-accent:hover {
+  filter: brightness(1.06);
+}
+
+/* ------------------------------------------------------------------ *
+ * ADMIN SHELL SCROLL LOCK
+ *
+ * On tablet/desktop (768px and up) the admin panel is a fixed, one-screen
+ * app: the sidebar and the content area scroll on their own, and the PAGE
+ * behind them must not scroll at all. The rules below pin the document
+ * itself so nothing — not a stray pixel of height, not scroll chaining at
+ * the end of a list — can make the whole page slide.
+ *
+ * `:has(.admin)` means this only applies on admin pages; the public
+ * portfolio still scrolls completely normally.
+ *
+ * If you ever want the admin panel to scroll as one long page again,
+ * delete this whole block (and the md:h-screen classes in
+ * src/app/admin/(panel)/layout.jsx).
+ * ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  html:has(.admin),
+  body:has(.admin) {
+    height: 100%;
+    overflow: hidden;
+    /* stop the "rubber band" bounce from revealing anything underneath */
+    overscroll-behavior: none;
+  }
+}

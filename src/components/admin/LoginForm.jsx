@@ -15,7 +15,7 @@ export default function LoginForm({ next }) {
   // wipe the email after a wrong password — so keep it in state.
   const [email, setEmail] = useState("");
   return (
-    <form action={formAction} className="space-y-4 p-6 rounded-2xl border border-line bg-surface">
+    <form action={formAction} className="space-y-4 p-6 rounded-2xl border border-line bg-card shadow-[0_24px_60px_-30px_rgba(20,30,70,0.35)]">
       <input type="hidden" name="next" value={next} />
       <Field label="Email">
         <input

@@ -165,6 +165,9 @@ export function ImageInput({ name, value = "" }) {
   const [error, setError] = useState("");
   const fileRef = useRef(null);
 
+  /* Send the chosen file to /api/upload and put the returned URL in the box.
+     Any failure reason from the server is shown under the button in red, so
+     you can see the real cause (bad Cloudinary key, file too big, …). */
   async function upload(file) {
     if (!file) return;
     setBusy(true);
@@ -173,8 +176,24 @@ export function ImageInput({ name, value = "" }) {
       const body = new FormData();
       body.append("file", file);
       const res = await fetch("/api/upload", { method: "POST", body });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
+
+      // The route always answers with JSON — but if the session expired the
+      // server may answer with an HTML login page instead, which would blow up
+      // res.json(). Read it as text first and only then try to parse.
+      const raw = await res.text();
+      let data = {};
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        throw new Error(
+          res.status === 401 || /<!doctype html/i.test(raw)
+            ? "Your admin session expired — reload the page, log in again and retry."
+            : `Server answered with something unexpected (HTTP ${res.status}). Check the terminal running npm run dev.`,
+        );
+      }
+
+      if (!res.ok) throw new Error(data.error || `Upload failed (HTTP ${res.status})`);
+      if (!data.url) throw new Error("Upload succeeded but no image URL came back.");
       setUrl(data.url);
     } catch (e) {
       setError(e.message);
