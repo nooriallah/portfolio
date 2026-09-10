@@ -2,10 +2,37 @@
 # Netlify detects Next.js automatically and uses its Next runtime; this file
 # just pins the build command and publish folder so deploys are predictable.
 # Environment variables (DATABASE_URL, AUTH_SECRET, CLOUDINARY_*) are set in
-# Netlify → Site settings → Environment variables, NOT here.
+# Netlify → Site configuration → Environment variables, NOT here.
 [build]
   command = "npm run build"
   publish = ".next"
+
+# ---------------------------------------------------------------------------
+# SECRETS SCANNING
+#
+# After every build Netlify searches the repository and the build output for
+# the VALUES of your environment variables, and fails the deploy if it finds
+# one — the idea being that a real secret should never be sitting in a file.
+#
+# Two of the settings below keep that check useful instead of annoying:
+#
+# SECRETS_SCAN_OMIT_KEYS — variables that are NOT secret and are *supposed* to
+#   appear in the output:
+#     NEXT_PUBLIC_SITE_URL   every NEXT_PUBLIC_* value is baked into the
+#                            browser JavaScript by design — it can never be
+#                            hidden, so scanning for it always fails.
+#     CLOUDINARY_CLOUD_NAME  appears inside every image URL on the site.
+#     CLOUDINARY_FOLDER      likewise part of the public image URLs.
+#   The real secrets — DATABASE_URL, AUTH_SECRET, CLOUDINARY_API_KEY and
+#   CLOUDINARY_API_SECRET — are deliberately NOT listed here, so you still get
+#   warned if one of them ever ends up in a file.
+#
+# SECRETS_SCAN_OMIT_PATHS — files that only ever hold placeholders and
+#   instructions, never real values.
+# ---------------------------------------------------------------------------
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SITE_URL,CLOUDINARY_CLOUD_NAME,CLOUDINARY_FOLDER"
+  SECRETS_SCAN_OMIT_PATHS = ".env.example,README.md"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

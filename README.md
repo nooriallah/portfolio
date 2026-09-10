@@ -93,8 +93,32 @@ i18n field in the admin gets a new input automatically.
 
 1. Push the repo to GitHub and import it in Netlify (the Next.js runtime is detected
    automatically; `netlify.toml` is included).
-2. Site settings → Environment variables: add every variable from `.env.local`
-   **except** `ADMIN_EMAIL` / `ADMIN_PASSWORD` (only needed for seeding).
+2. **Add the environment variables in Netlify** — this is the step that is easy to
+   miss. `.env.local` is deliberately NOT in git (it holds your passwords), so
+   Netlify never sees it. Go to **Site configuration → Environment variables** and
+   add these, exactly as they appear in your local `.env.local`:
+
+   | Variable | Needed for | Notes |
+   |---|---|---|
+   | `DATABASE_URL` | **required** | your Neon connection string |
+   | `AUTH_SECRET` | **required** | admin login sessions |
+   | `CLOUDINARY_CLOUD_NAME` | image uploads | |
+   | `CLOUDINARY_API_KEY` | image uploads | |
+   | `CLOUDINARY_API_SECRET` | image uploads | |
+   | `CLOUDINARY_FOLDER` | image uploads | optional, defaults to `portfolio` |
+   | `NEXT_PUBLIC_SITE_URL` | correct share links | e.g. `https://your-site.netlify.app` |
+
+   Do **not** add `ADMIN_EMAIL` / `ADMIN_PASSWORD` — they are only used by
+   `npm run db:seed` on your own computer.
+   Paste the values WITHOUT surrounding quotes, then **Deploys → Trigger deploy →
+   Clear cache and deploy site** (a plain redeploy can reuse the old build).
 3. Run `npm run db:push` and `npm run db:seed` once from your computer against the
    Neon `DATABASE_URL` — the database is shared, so production sees the same data.
 4. Deploy. Log in at `https://your-site/admin`.
+
+### If the site builds but shows "Database error"
+The build no longer needs the database (it only needs it when a page is actually
+visited), so a successful build with a broken page means a variable is missing or
+wrong in step 2. The error screen names the reason: `DATABASE_URL is not set`
+means the variable never arrived; `connect ECONNREFUSED` or a timeout means the
+value is there but the database is unreachable.
