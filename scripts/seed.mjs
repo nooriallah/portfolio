@@ -13,14 +13,14 @@
  *     .env.local (skipped if that email already exists).
  *
  * The texts come from the old hard-coded files
- * (src/components/i18n/translations.js and src/data/projects.js), which are
+ * (src/backend/seed-data/translations.js and .../projects.js), which are
  * kept only as the seed source and are no longer used by the site itself.
  */
 import bcrypt from "bcryptjs";
 import { sql } from "drizzle-orm";
-import { getDb, schema } from "../src/lib/db/index.js";
-import { translations } from "../src/components/i18n/translations.js";
-import { projects as legacyProjects } from "../src/data/projects.js";
+import { getDb, schema } from "../src/backend/db/index.js";
+import { translations } from "../src/backend/seed-data/translations.js";
+import { projects as legacyProjects } from "../src/backend/seed-data/projects.js";
 
 const { en, fa, ps } = translations;
 

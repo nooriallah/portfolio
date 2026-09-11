@@ -1,0 +1,307 @@
+/* ------------------------------------------------------------------ *
+ * src/frontend/styles/globals.css — GLOBAL STYLES + DESIGN TOKENS
+ * (was src/index.css in the Vite version)
+ *
+ * Change colours here: `:root` = light theme, `.dark` = dark theme.
+ * Every component uses these via Tailwind classes such as bg-bg,
+ * text-heading, border-line, text-accent …
+ * ------------------------------------------------------------------ */
+@import "tailwindcss";
+
+/* Tell Tailwind where the source files are (Next.js + Turbopack). */
+@source "../**/*.{js,jsx}";
+
+/* Dark mode is class-based: <html class="dark"> (chosen with the toggle).
+   <html class="theme-system"> = no choice saved yet → follow the OS setting.
+   Both cases activate the `dark:` utilities and the .dark tokens below. */
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(.theme-system, .theme-system *) {
+      @slot;
+    }
+  }
+}
+
+/* ---- Semantic color tokens (LIGHT is the default) ---- */
+:root {
+  --bg: #ffffff; /* page background */
+  --section: rgba(15, 23, 42, 0.03); /* alternating sections — translucent so the 3D backdrop shows through */
+  --surface: #ffffff; /* card background */
+  --surface-strong: #f8fafc; /* card hover */
+  --card: #ffffff; /* solid surfaces (dropdowns) */
+  --chip: #f1f5f9; /* skill chips / subtle fills */
+  --line: #e2e8f0; /* standard borders */
+  --line-soft: #f1f5f9; /* subtle dividers */
+  --heading: #0f172a; /* headings */
+  --body: #334155; /* body text */
+  --muted: #64748b; /* muted text */
+  --faint: #94a3b8; /* faint text / icons */
+  --accent: #2563eb; /* blue accent */
+}
+
+/* ---- Dark overrides ----
+   `@variant dark` applies these for <html class="dark"> AND for
+   <html class="theme-system"> when the OS prefers dark (see @custom-variant above). */
+:root {
+  @variant dark {
+    --bg: #020617;
+    --section: rgba(255, 255, 255, 0.02);
+    --surface: rgba(15, 23, 42, 0.4);
+    --surface-strong: rgba(15, 23, 42, 0.7);
+    --card: #0f172a;
+    --chip: rgba(255, 255, 255, 0.06);
+    --line: rgba(255, 255, 255, 0.1);
+    --line-soft: rgba(255, 255, 255, 0.06);
+    --heading: #ffffff;
+    --body: #cbd5e1;
+    --muted: #94a3b8;
+    --faint: #64748b;
+    --accent: #60a5fa;
+  }
+}
+
+/* ---- Expose tokens as Tailwind color utilities (bg-bg, text-heading, ...) ---- */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-section: var(--section);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-card: var(--card);
+  --color-chip: var(--chip);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--body);
+}
+
+/* Smooth the theme switch */
+body,
+body * {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.2s ease;
+}
+
+/* Use a readable Arabic-script font when RTL is active
+   (Vazirmatn is linked from Google Fonts in src/app/layout.jsx). */
+[dir="rtl"] body {
+  font-family: Vazirmatn, system-ui, "Segoe UI", sans-serif;
+}
+
+/* ------------------------------------------------------------------ *
+ * Motion
+ * ------------------------------------------------------------------ */
+
+/* Rotating role word in the hero */
+@keyframes role-swap {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.role-swap {
+  display: inline-block;
+  animation: role-swap 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hero scroll cue */
+@keyframes scroll-cue-dot {
+  0%,
+  100% {
+    transform: translateY(-5px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
+}
+.scroll-cue-dot {
+  animation: scroll-cue-dot 1.9s ease-in-out infinite;
+}
+
+/* Tilted surfaces get their own compositor layer only while interacting */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ *
+ * Reduced motion — stop everything that moves, keep everything legible
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Staggered entrances
+ *
+ * The trigger is one IntersectionObserver per group (see ui/Stagger.jsx and
+ * ui/SplitText.jsx); the animation itself is pure CSS, offset per child by
+ * --stagger-delay. A list of forty chips costs one observer.
+ * ------------------------------------------------------------------ */
+.stagger-item {
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+[data-shown="false"] > .stagger-item {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+
+/* Word-by-word heading reveal */
+.split-text {
+  perspective: 800px;
+}
+
+.split-word {
+  display: inline-block;
+  transform-origin: 50% 90%;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+[data-shown="false"] .split-word {
+  opacity: 0;
+  transform: translate3d(0, 0.45em, 0) rotateX(35deg);
+}
+
+/* ------------------------------------------------------------------ *
+ * Reduced motion — belt and braces. The components already render their
+ * finished state, and this makes certain nothing is left invisible.
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .stagger-item,
+  .split-word,
+  [data-shown="false"] > .stagger-item,
+  [data-shown="false"] .split-word {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * ADMIN PANEL THEME  (src/app/admin/(panel)/layout.jsx wraps everything in
+ * <div class="admin">). The public site keeps the blue tokens above; inside
+ * the admin these overrides give the dashboard its own look:
+ *   navy sidebar · soft grey page · white rounded frame · amber accent.
+ * Change admin colours HERE only.
+ * ------------------------------------------------------------------ */
+.admin {
+  --adm-page: #e9edf4;        /* grey page behind the white frame */
+  --adm-navy: #1f2b5b;        /* sidebar + dark KPI card */
+  --adm-navy-deep: #17204a;   /* sidebar bottom / hover */
+  --adm-amber: #f5a524;       /* accent: active nav, buttons, donut */
+  --adm-amber-ink: #1a1a1a;   /* text on amber */
+
+  /* re-map the shared tokens so every existing admin component follows */
+  --bg: #ffffff;              /* inputs */
+  --surface: #f6f8fc;         /* cards inside the frame */
+  --surface-strong: #eef2f9;
+  --card: #ffffff;
+  --chip: #eaeef6;
+  --line: #e1e6f0;
+  --line-soft: #edf0f6;
+  --heading: #1c2340;
+  --body: #3f4a68;
+  --muted: #6b7794;
+  --faint: #98a2bb;
+  --accent: var(--adm-amber);
+}
+
+/* Dark mode keeps the same structure with deeper surfaces. */
+:root {
+  @variant dark {
+    .admin {
+      --adm-page: #0b1020;
+      --adm-navy: #161e42;
+      --adm-navy-deep: #111735;
+      --bg: #0f1530;
+      --surface: #151c3a;
+      --surface-strong: #1a2246;
+      --card: #121a38;
+      --chip: #1e2750;
+      --line: #27305a;
+      --line-soft: #1f2849;
+      --heading: #f3f5fb;
+      --body: #c9d0e3;
+      --muted: #96a0c0;
+      --faint: #6b7597;
+    }
+  }
+}
+
+/* Primary admin button — amber with dark text (matches the reference). */
+.admin .btn-accent {
+  background: var(--adm-amber);
+  color: var(--adm-amber-ink);
+}
+.admin .btn-accent:hover {
+  filter: brightness(1.06);
+}
+
+/* ------------------------------------------------------------------ *
+ * ADMIN SHELL SCROLL LOCK
+ *
+ * On tablet/desktop (768px and up) the admin panel is a fixed, one-screen
+ * app: the sidebar and the content area scroll on their own, and the PAGE
+ * behind them must not scroll at all. The rules below pin the document
+ * itself so nothing — not a stray pixel of height, not scroll chaining at
+ * the end of a list — can make the whole page slide.
+ *
+ * `:has(.admin)` means this only applies on admin pages; the public
+ * portfolio still scrolls completely normally.
+ *
+ * If you ever want the admin panel to scroll as one long page again,
+ * delete this whole block (and the md:h-screen classes in
+ * src/app/admin/(panel)/layout.jsx).
+ * ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  html:has(.admin),
+  body:has(.admin) {
+    height: 100%;
+    overflow: hidden;
+    /* stop the "rubber band" bounce from revealing anything underneath */
+    overscroll-behavior: none;
+  }
+}

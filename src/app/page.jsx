@@ -10,10 +10,10 @@
  * "Site" settings group, so they are editable in /admin.
  */
 import { cookies } from "next/headers";
-import { getContent } from "@/lib/cms/content.js";
-import { LANGUAGES, DEFAULT_LANG } from "@/lib/cms/schema.js";
-import Providers from "@/components/Providers.jsx";
-import Site from "@/components/Site.jsx";
+import { getContent } from "@backend/cms/content.js";
+import { LANGUAGES, DEFAULT_LANG } from "@shared/config.js";
+import Providers from "@frontend/components/Providers.jsx";
+import Site from "@frontend/components/Site.jsx";
 
 export async function generateMetadata() {
   const { settings } = await getContent();

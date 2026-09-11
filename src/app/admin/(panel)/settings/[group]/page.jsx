@@ -1,14 +1,14 @@
 /**
  * src/app/admin/(panel)/settings/[group]/page.jsx — EDIT ONE SETTINGS GROUP
  * (/admin/settings/site, /admin/settings/hero, …).
- * The form is generated from SETTINGS_GROUPS in src/lib/cms/schema.js.
+ * The form is generated from SETTINGS_GROUPS in src/backend/cms/schema.js.
  */
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
-import { getDb, schema } from "@/lib/db/index.js";
-import { SETTINGS_GROUPS } from "@/lib/cms/schema.js";
-import { SettingsForm } from "@/components/admin/Forms.jsx";
-import { PageHeader } from "@/components/admin/PageHeader.jsx";
+import { getDb, schema } from "@backend/db/index.js";
+import { SETTINGS_GROUPS } from "@backend/cms/schema.js";
+import { SettingsForm } from "@backend/admin-ui/Forms.jsx";
+import { PageHeader } from "@backend/admin-ui/PageHeader.jsx";
 
 export default async function SettingsGroupPage({ params }) {
   const { group: key } = await params;

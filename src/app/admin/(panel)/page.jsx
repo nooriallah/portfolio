@@ -8,7 +8,7 @@
  * Row 3 — quick links to every settings group.
  *
  * All numbers are live from the database — nothing is invented.
- * Card look: the `card` constant; chart colours: src/components/admin/Charts.jsx.
+ * Card look: the `card` constant; chart colours: src/backend/admin-ui/Charts.jsx.
  */
 import Link from "next/link";
 import { sql, eq, desc } from "drizzle-orm";
@@ -19,10 +19,10 @@ import {
   MessageSquareQuote,
   ArrowUpRight,
 } from "lucide-react";
-import { getDb, schema } from "@/lib/db/index.js";
-import { SETTINGS_GROUPS } from "@/lib/cms/schema.js";
-import { BarChart, Donut } from "@/components/admin/Charts.jsx";
-import { PageHeader } from "@/components/admin/PageHeader.jsx";
+import { getDb, schema } from "@backend/db/index.js";
+import { SETTINGS_GROUPS } from "@backend/cms/schema.js";
+import { BarChart, Donut } from "@backend/admin-ui/Charts.jsx";
+import { PageHeader } from "@backend/admin-ui/PageHeader.jsx";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

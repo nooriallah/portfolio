@@ -6,9 +6,9 @@
  *
  * Sidebar: your avatar (Site → Logo, or the About photo), name (Hero → Your
  * name, English), login email, then icon navigation generated from
- * SETTINGS_GROUPS + COLLECTIONS in src/lib/cms/schema.js, and Log out.
+ * SETTINGS_GROUPS + COLLECTIONS in src/backend/cms/schema.js, and Log out.
  *
- * Colours live in src/app/globals.css under ".admin" (--adm-navy, --adm-amber …).
+ * Colours live in src/frontend/styles/globals.css under ".admin" (--adm-navy, --adm-amber …).
  * Spacing: the frame padding is the `p-4 lg:p-6` on the outer div; the sidebar
  * width is the `17rem` in the grid template below.
  *
@@ -29,12 +29,12 @@
 import Link from "next/link";
 import { eq } from "drizzle-orm";
 import { LogOut, ExternalLink, UserRound } from "lucide-react";
-import { getSession } from "@/lib/auth.js";
-import { getDb, schema } from "@/lib/db/index.js";
-import { logoutAction } from "@/lib/cms/actions.js";
-import { SETTINGS_GROUPS, COLLECTIONS } from "@/lib/cms/schema.js";
-import { pick } from "@/lib/cms/localize.js";
-import AdminNav from "@/components/admin/AdminNav.jsx";
+import { getSession } from "@backend/auth/index.js";
+import { getDb, schema } from "@backend/db/index.js";
+import { logoutAction } from "@backend/cms/actions.js";
+import { SETTINGS_GROUPS, COLLECTIONS } from "@backend/cms/schema.js";
+import { pick } from "@shared/localize.js";
+import AdminNav from "@backend/admin-ui/AdminNav.jsx";
 
 export const metadata = { title: "Admin", robots: { index: false } };
 

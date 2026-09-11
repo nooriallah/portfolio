@@ -4,9 +4,9 @@
  */
 import { desc } from "drizzle-orm";
 import { Mail, MailOpen, Trash2 } from "lucide-react";
-import { getDb, schema } from "@/lib/db/index.js";
-import { markMessageRead, deleteMessage } from "@/lib/cms/actions.js";
-import { PageHeader } from "@/components/admin/PageHeader.jsx";
+import { getDb, schema } from "@backend/db/index.js";
+import { markMessageRead, deleteMessage } from "@backend/cms/actions.js";
+import { PageHeader } from "@backend/admin-ui/PageHeader.jsx";
 
 export default async function MessagesPage() {
   const db = await getDb();

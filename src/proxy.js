@@ -7,7 +7,7 @@
  *    otherwise the visitor is sent to /admin/login.
  */
 import { NextResponse } from "next/server";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/session-token.js";
+import { SESSION_COOKIE, verifySessionToken } from "@backend/auth/session-token.js";
 
 export async function proxy(request) {
   const { pathname } = request.nextUrl;

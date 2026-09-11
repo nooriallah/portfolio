@@ -1,9 +1,9 @@
 /**
  * src/app/admin/(panel)/account/page.jsx — CHANGE THE ADMIN PASSWORD (/admin/account).
  */
-import { getSession } from "@/lib/auth.js";
-import PasswordForm from "@/components/admin/PasswordForm.jsx";
-import { PageHeader } from "@/components/admin/PageHeader.jsx";
+import { getSession } from "@backend/auth/index.js";
+import PasswordForm from "@backend/admin-ui/PasswordForm.jsx";
+import { PageHeader } from "@backend/admin-ui/PageHeader.jsx";
 
 export default async function AccountPage() {
   const session = await getSession();

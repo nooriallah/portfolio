@@ -1,14 +1,14 @@
 /**
  * src/app/admin/(panel)/[collection]/[id]/page.jsx — CREATE / EDIT ONE ROW
  * (/admin/projects/new, /admin/projects/12, …).
- * The form is generated from COLLECTIONS[collection].fields in src/lib/cms/schema.js.
+ * The form is generated from COLLECTIONS[collection].fields in src/backend/cms/schema.js.
  */
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
-import { getDb, schema } from "@/lib/db/index.js";
-import { COLLECTIONS } from "@/lib/cms/schema.js";
-import { ItemForm } from "@/components/admin/Forms.jsx";
-import { PageHeader } from "@/components/admin/PageHeader.jsx";
+import { getDb, schema } from "@backend/db/index.js";
+import { COLLECTIONS } from "@backend/cms/schema.js";
+import { ItemForm } from "@backend/admin-ui/Forms.jsx";
+import { PageHeader } from "@backend/admin-ui/PageHeader.jsx";
 
 export default async function ItemPage({ params }) {
   const { collection, id } = await params;

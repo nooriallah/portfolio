@@ -14,8 +14,8 @@
  * they can be edited in /admin → Site.
  */
 import { cookies } from "next/headers";
-import "./globals.css";
-import { LANGUAGES, DEFAULT_LANG } from "@/lib/cms/schema.js";
+import "@frontend/styles/globals.css";
+import { LANGUAGES, DEFAULT_LANG } from "@shared/config.js";
 
 // Arabic-script font for Farsi / Pashto, loaded from Google Fonts (same as
 // the old index.html). globals.css applies it under [dir="rtl"].

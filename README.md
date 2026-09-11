@@ -38,55 +38,70 @@ npm run dev                      # http://localhost:3000  (admin: /admin)
 | `npm run lint` | ESLint |
 | `npm run db:push` | create/update the tables from `./drizzle` (safe to re-run) |
 | `npm run db:seed` | insert starter content (skips anything that already exists) |
-| `npm run db:generate` | after editing `src/lib/db/schema.js`: write a new migration into `./drizzle`, then run `db:push` |
+| `npm run db:generate` | after editing `src/backend/db/schema.js`: write a new migration into `./drizzle`, then run `db:push` |
 | `npm run db:studio` | browse the database in Drizzle Studio |
 
 ## 3. Where things are
 
+The code is split into **frontend**, **backend** and **shared** folders inside one
+Next.js app (one dev server, one build, one Netlify site). Each folder has its own
+README with more detail.
+
 ```
-src/app/
+src/app/                  ROUTES ONLY (Next.js requires them here — keep thin)
   layout.jsx              root <html>: theme + language from cookies, fonts
   page.jsx                public home page (loads content from the DB)
-  globals.css             DESIGN TOKENS (colours) + global styles
   robots.js               robots.txt (hides /admin from search engines)
   admin/(auth)/login/     login page
   admin/(panel)/          dashboard, collections, settings, messages, account
   api/upload/route.js     image upload → Cloudinary
 src/proxy.js              protects /admin (redirects to login)
-src/lib/
-  db/schema.js            DATABASE TABLES (Drizzle)
-  db/index.js             connection (Neon in production, any Postgres locally)
-  cms/schema.js           WHAT THE ADMIN CAN EDIT (fields, languages, nav ids)
+
+src/frontend/             EVERYTHING THE VISITOR SEES        →  @frontend/…
+  components/Site.jsx     the page shell (section order)
+  components/             Hero, About, Work, Experience, Skills, Services,
+                          Reviews, Contact, Navbar, Footer, theme + language
+                          switches, Providers
+  components/three/       3D scenes
+  components/ui/          motion primitives (Reveal, Tilt, Stagger, SplitText…)
+  hooks/                  scroll, pointer, parallax, device tier, reduced motion
+  i18n/LanguageProvider   picks the active language for the whole page
+  styles/globals.css      DESIGN TOKENS (colours) + global styles
+  utils/, assets/
+
+src/backend/              DATA, SERVER LOGIC, ADMIN PANEL     →  @backend/…
+  cms/schema.js           WHAT THE ADMIN CAN EDIT (fields per group/collection)
   cms/content.js          loads + caches all public content
   cms/actions.js          server actions used by the admin (save/delete/reorder…)
-  cms/public-actions.js   contact-form action
-  cms/localize.js         { en, fa, ps } → string for the active language
   cms/parse.js            form data → database values
-  cms/icons.js            icon names → components
-  auth.js, session-token.js   admin login + session cookie
-  cloudinary.js           upload helper
-src/components/
-  Site.jsx                the page shell (section order)
-  Hero/About/Work/…       the public sections
-  Providers.jsx, ThemeProvider.jsx, i18n/LanguageProvider.jsx
-  three/                  3D scenes (unchanged from the Vite version)
-  ui/                     motion primitives (Reveal, Tilt, Stagger, SplitText…)
-  admin/                  admin panel UI (Fields, Forms, nav, login…)
-scripts/seed.mjs          starter content (reads the old translations.js / projects.js)
+  cms/public-actions.js   contact-form action
+  db/schema.js            DATABASE TABLES (Drizzle)
+  db/index.js             connection (Neon in production, any Postgres locally)
+  auth/                   admin login + session cookie
+  media/cloudinary.js     upload helper
+  admin-ui/               admin panel UI (Fields, Forms, nav, charts, login…)
+  seed-data/              old site content, used only by `npm run db:seed`
+
+src/shared/               USED BY BOTH SIDES                  →  @shared/…
+  config.js               languages + section ids
+  localize.js             { en, fa, ps } → string for the active language
+  icons/                  brand + lucide icon maps
+
+scripts/seed.mjs          starter content (reads src/backend/seed-data/)
 ```
 
 ### Changing colours
-Edit the CSS variables at the top of `src/app/globals.css` (`:root` = light,
+Edit the CSS variables at the top of `src/frontend/styles/globals.css` (`:root` = light,
 `.dark` = dark). Every component uses them through Tailwind classes such as
 `bg-bg`, `text-heading`, `text-accent`, `border-line`.
 
 ### Adding an editable text
-1. Add a field to the right group in `src/lib/cms/schema.js`.
+1. Add a field to the right group in `src/backend/cms/schema.js`.
 2. Read it in the component: `const { t } = useLang(); t.<group>.<field>`.
 3. Fill it in `/admin` (or add it to `scripts/seed.mjs` and run `npm run db:seed`).
 
 ### Adding a language
-Add `{ code, label, dir }` to `LANGUAGES` in `src/lib/cms/schema.js`; every
+Add `{ code, label, dir }` to `LANGUAGES` in `src/shared/config.js`; every
 i18n field in the admin gets a new input automatically.
 
 ## 4. Deploying to Netlify

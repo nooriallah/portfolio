@@ -3,7 +3,7 @@
  * (/admin/projects, /admin/skills, …).
  *
  * Rows can be reordered by DRAGGING the ⠿ handle (see
- * src/components/admin/SortableList.jsx), or one step at a time with the
+ * src/backend/admin-ui/SortableList.jsx), or one step at a time with the
  * ↑ ↓ buttons. They can also be edited and deleted from here.
  *
  * This file only reads the rows from the database and hands the plain values
@@ -13,12 +13,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { asc } from "drizzle-orm";
 import { Plus } from "lucide-react";
-import { getDb, schema } from "@/lib/db/index.js";
-import { COLLECTIONS } from "@/lib/cms/schema.js";
-import { pick } from "@/lib/cms/localize.js";
-import { BTN_PRIMARY } from "@/components/admin/Forms.jsx";
-import { PageHeader } from "@/components/admin/PageHeader.jsx";
-import SortableList from "@/components/admin/SortableList.jsx";
+import { getDb, schema } from "@backend/db/index.js";
+import { COLLECTIONS } from "@backend/cms/schema.js";
+import { pick } from "@shared/localize.js";
+import { BTN_PRIMARY } from "@backend/admin-ui/Forms.jsx";
+import { PageHeader } from "@backend/admin-ui/PageHeader.jsx";
+import SortableList from "@backend/admin-ui/SortableList.jsx";
 
 export default async function CollectionPage({ params, searchParams }) {
   const { collection } = await params;

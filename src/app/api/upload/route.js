@@ -12,13 +12,13 @@
  * Limits: images only, max 8 MB — change MAX_BYTES below if you need bigger.
  */
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/auth.js";
+import { getSession } from "@backend/auth/index.js";
 import {
   uploadImage,
   cloudinaryEnabled,
   cloudinaryStatus,
   explainCloudinaryError,
-} from "@/lib/cloudinary.js";
+} from "@backend/media/cloudinary.js";
 
 const MAX_BYTES = 8 * 1024 * 1024;
 

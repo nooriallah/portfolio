@@ -8,10 +8,10 @@
  * no interactive prompts. Already-applied migrations are skipped, so it is
  * always safe to run again.
  *
- * After changing src/lib/db/schema.js, first run `npm run db:generate` (writes
+ * After changing src/backend/db/schema.js, first run `npm run db:generate` (writes
  * a new file into ./drizzle), then `npm run db:push`.
  */
-import { getDb } from "../src/lib/db/index.js";
+import { getDb } from "../src/backend/db/index.js";
 
 const url = process.env.DATABASE_URL || "";
 const migrationsFolder = new URL("../drizzle", import.meta.url).pathname

@@ -1,9 +1,9 @@
 /**
  * src/app/admin/(auth)/login/page.jsx — ADMIN LOGIN PAGE (/admin/login).
  * Plain email + password form; the check happens in loginAction
- * (src/lib/cms/actions.js). Already-logged-in visitors are redirected by src/proxy.js.
+ * (src/backend/cms/actions.js). Already-logged-in visitors are redirected by src/proxy.js.
  */
-import LoginForm from "@/components/admin/LoginForm.jsx";
+import LoginForm from "@backend/admin-ui/LoginForm.jsx";
 
 export const metadata = { title: "Admin login", robots: { index: false } };
 

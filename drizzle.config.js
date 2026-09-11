@@ -23,7 +23,7 @@ if (existsSync(".env.local")) {
 
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./src/lib/db/schema.js",
+  schema: "./src/backend/db/schema.js",
   out: "./drizzle",
   dbCredentials: { url: process.env.DATABASE_URL },
 });
