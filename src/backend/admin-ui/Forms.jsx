@@ -9,10 +9,11 @@
  * Both forms are generated from the field definitions in src/backend/cms/schema.js
  * and submit to the server actions in src/backend/cms/actions.js.
  */
-import { useActionState, startTransition } from "react";
+import { useActionState, startTransition, useRef } from "react";
 import Link from "next/link";
 import { ArrowUp, ArrowDown, Trash2, Loader2, Check } from "lucide-react";
 import { FieldInput } from "./Fields.jsx";
+import SeoPreview from "./SeoPreview.jsx";
 import { saveSettings, saveItem, deleteItem, moveItem } from "@backend/cms/actions.js";
 
 // Amber button with dark text (colours: `.admin .btn-accent` in globals.css).
@@ -34,9 +35,11 @@ function SaveButton({ pending, label = "Save changes" }) {
 /* ------------------------------------------------------------------ *
  * Settings group form
  * ------------------------------------------------------------------ */
-export function SettingsForm({ group, values }) {
+export function SettingsForm({ group, values, previewFallback }) {
   const action = saveSettings.bind(null, group.key);
   const [state, formAction, pending] = useActionState(action, null);
+  // The live preview reads this form's current values straight from the DOM.
+  const formRef = useRef(null);
 
   // Submit manually instead of <form action={…}>: React resets a form to its
   // default values after a form action succeeds, which would flash the OLD
@@ -48,7 +51,13 @@ export function SettingsForm({ group, values }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-6">
+      {/* Groups marked `preview: "seo"` in src/backend/cms/schema.js get the
+          Google / share-card preview above their fields. */}
+      {group.preview === "seo" && (
+        <SeoPreview formRef={formRef} fallback={previewFallback} />
+      )}
+
       {group.fields.map((f) => (
         <FieldInput key={f.name} field={f} value={values?.[f.name]} error={state?.errors?.[f.name]} />
       ))}

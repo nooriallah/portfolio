@@ -37,7 +37,11 @@ export const SETTINGS_GROUPS = [
     description: "Identity, images and files used across the whole site.",
     fields: [
       { name: "title", type: "text", label: "Browser tab title" },
-      { name: "description", type: "textarea", label: "Meta description (SEO)" },
+      {
+        name: "description",
+        type: "textarea",
+        label: "Short description — fallback only (see the SEO page)",
+      },
       { name: "themeColor", type: "text", label: "Theme colour (hex)" },
       { name: "logo", type: "image", label: "Logo" },
       { name: "heroImage", type: "image", label: "Hero portrait (optional)" },
@@ -45,6 +49,81 @@ export const SETTINGS_GROUPS = [
       { name: "qrImage", type: "image", label: "Contact QR code" },
       { name: "cvUrl", type: "url", label: "CV file URL (PDF)" },
       { name: "cvFileName", type: "text", label: "CV download file name" },
+    ],
+  },
+  /* ------------------------------------------------------------------ *
+   * SEO & SHARING
+   *
+   * Everything a search engine or a chat app reads about the page:
+   * the Google result, and the preview card that appears when the link is
+   * pasted into WhatsApp, Telegram, LinkedIn, Facebook, X/Twitter or iMessage.
+   *
+   * These values are turned into <meta> tags in src/app/page.jsx
+   * (generateMetadata). Every field is optional — anything left empty falls
+   * back to the Site group, so the page is never left without a title.
+   *
+   * `preview: "seo"` makes the admin page show the live Google / social card
+   * preview above the form (src/backend/admin-ui/SeoPreview.jsx).
+   * ------------------------------------------------------------------ */
+  {
+    key: "seo",
+    label: "SEO & sharing",
+    description:
+      "How the site looks in Google and in the preview card when someone shares the link.",
+    preview: "seo",
+    fields: [
+      {
+        name: "metaTitle",
+        type: "i18n",
+        label: "Page title — about 60 characters (empty = Site → Browser tab title)",
+      },
+      {
+        name: "metaDescription",
+        type: "i18n-textarea",
+        label: "Description — about 155 characters, this is the grey text in Google",
+      },
+      { name: "keywords", type: "tags", label: "Keywords (one per line)" },
+
+      // --- the picture shown when the link is shared -------------------
+      {
+        name: "ogImage",
+        type: "image",
+        label: "Share image — 1200 × 630 px (empty = hero portrait, then logo)",
+      },
+      { name: "ogImageAlt", type: "i18n", label: "Share image — description for screen readers" },
+
+      // --- identity ----------------------------------------------------
+      { name: "siteName", type: "text", label: "Site name shown above the share card" },
+      { name: "author", type: "text", label: "Author name (empty = your name from Hero)" },
+      {
+        name: "siteUrl",
+        type: "url",
+        label: "Public address of the site, e.g. https://noorullahtech.netlify.app",
+      },
+      {
+        name: "twitterHandle",
+        type: "text",
+        label: "X / Twitter username, with or without the @ (optional)",
+      },
+
+      // --- mobile ------------------------------------------------------
+      {
+        name: "mobileAppTitle",
+        type: "text",
+        label: "Name under the icon when added to a phone home screen",
+      },
+
+      // --- search engines ----------------------------------------------
+      {
+        name: "googleVerification",
+        type: "text",
+        label: "Google Search Console verification code (optional)",
+      },
+      {
+        name: "noindex",
+        type: "boolean",
+        label: "Hide from search engines (tick only while the site is unfinished)",
+      },
     ],
   },
   {

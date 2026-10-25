@@ -36,7 +36,7 @@ These are standing instructions from the owner. They matter as much as the code.
    testimonials, years of experience or skills. If content is missing, ask.
 4. **Work in place.** Don't scaffold a parallel project folder to "start clean".
 5. **Don't rewrite what works.** Prefer small, verifiable changes over refactors.
-6. **Test before declaring done.** Build it, run it, look at it. See §11.
+6. **Test before declaring done.** Build it, run it, look at it. See §13.
 
 ---
 
@@ -208,13 +208,14 @@ src/backend/
   cms/public-actions.js   sendMessage(): the public contact form
   db/index.js             getDb(): Neon HTTP driver for *.neon.tech, node-pg
                           otherwise. The missing-URL check is INSIDE create()
-                          on purpose — see §11.
+                          on purpose — see §12.
   db/schema.js            Drizzle tables
   auth/index.js           sessions, bcrypt, requireAdmin (Node runtime)
   auth/session-token.js   JWT verify only — Edge-safe, used by proxy.js
   media/cloudinary.js     upload + credential parsing + error explanations
   admin-ui/               Fields, Forms, AdminNav, Charts, SortableList,
-                          LoginForm, PasswordForm, PageHeader
+                          LoginForm, PasswordForm, PageHeader,
+                          SeoPreview (the live Google / share-card preview)
   seed-data/              legacy projects.js + translations.js, used ONLY by
                           `npm run db:seed` to populate a fresh database.
                           They look unused — they are not. Do not delete them
@@ -309,7 +310,39 @@ The repo is connected to Netlify from GitHub; pushing to the main branch deploys
 
 ---
 
-## 11. Traps to know about (all previously hit)
+## 11. SEO and link previews
+
+All the `<meta>` tags are built in `generateMetadata()` in `src/app/page.jsx`
+from the **SEO & sharing** settings group (`/admin/settings/seo`). Nothing is
+hard-coded: title, description, keywords, canonical, author, Open Graph (the
+card WhatsApp / LinkedIn / Facebook / Telegram show), the Twitter card, the
+favicon and apple-touch-icon, `robots`, and the Google verification tag.
+
+Three things worth knowing before changing any of it:
+
+- **Every field is optional and falls back.** Empty SEO title → Site title →
+  a hard-coded last resort; empty share image → hero portrait → about photo →
+  logo. The page can never end up with no title or a blank share card.
+- **The text is per-language.** `generateMetadata` reads the `lang` cookie and
+  picks that language, so a visitor reading the Farsi page shares a Farsi
+  preview. `og:locale` follows, and the other two languages are listed as
+  `og:locale:alternate`. There are **no hreflang alternates**, deliberately:
+  all three languages live at the same URL (the language is a cookie, not a
+  path), so pointing hreflang at per-language URLs would be a lie.
+- **`og:image:width/height` are only declared for the dedicated share image**,
+  whose size the admin field specifies as 1200×630. For a fallback portrait we
+  stay silent rather than claim a size the file does not have — wrong
+  dimensions make platforms lay the card out badly.
+
+The admin page shows a live Google + social-card preview above the form
+(`src/backend/admin-ui/SeoPreview.jsx`). It is driven by a `preview: "seo"`
+key on the group in `cms/schema.js`, and it reads the form through a ref with
+`FormData` on every `input` event rather than tracking each field — so adding
+or renaming SEO fields needs no change to the preview component.
+
+---
+
+## 12. Traps to know about (all previously hit)
 
 - **Nothing may throw at module scope.** A top-level `throw` for a missing env var
   broke `next build` during "Collecting page data" with the misleading message
@@ -331,7 +364,7 @@ The repo is connected to Netlify from GitHub; pushing to the main branch deploys
 
 ---
 
-## 12. Checklist before saying a task is done
+## 13. Checklist before saying a task is done
 
 Build (`npm run build`) and lint clean; the page actually opened and looked at,
 desktop **and** ~390px mobile; no console errors; dark and light mode; RTL not

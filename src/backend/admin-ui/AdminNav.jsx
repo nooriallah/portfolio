@@ -27,6 +27,7 @@ import {
   Type,
   KeyRound,
   Circle,
+  Search,
 } from "lucide-react";
 
 const ICONS = {
@@ -39,6 +40,7 @@ const ICONS = {
   "/admin/reviews": MessageSquareQuote,
   "/admin/socials": Share2,
   "/admin/settings/site": Globe,
+  "/admin/settings/seo": Search,
   "/admin/settings/hero": Home,
   "/admin/settings/about": UserRound,
   "/admin/settings/contact": Phone,
