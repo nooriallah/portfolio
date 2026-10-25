@@ -154,6 +154,56 @@ export function explainCloudinaryError(err) {
   return msg ? `Cloudinary error: ${msg}` : "Upload failed for an unknown reason — check the terminal running npm run dev.";
 }
 
+/* ------------------------------------------------------------------ *
+ * DOCUMENTS (CV / PDF)
+ *
+ * Uploaded as resource_type "raw", NOT as an image, for two reasons:
+ *   1. a raw file is delivered byte-for-byte, which is what a CV download
+ *      should be — no image processing, no f_auto/q_auto transformation;
+ *   2. Cloudinary blocks PDF delivery through the IMAGE pipeline by default
+ *      (Settings → Security → "Allow delivery of PDF and ZIP files"), and
+ *      raw delivery sidesteps that restriction.
+ *
+ * The extension is kept in the public_id so the delivered URL still ends in
+ * .pdf and the browser knows what it is getting.
+ * ------------------------------------------------------------------ */
+export async function uploadFile(buffer, filename = "file") {
+  const cld = client();
+  const folder = env("CLOUDINARY_FOLDER") || "portfolio";
+
+  const ext = (filename.match(/\.([a-z0-9]+)$/i)?.[1] || "pdf").toLowerCase();
+  const base =
+    filename
+      .replace(/\.[^.]+$/, "")
+      .replace(/[^a-z0-9_-]+/gi, "-")
+      .slice(0, 60) || "file";
+
+  const result = await new Promise((resolve, reject) => {
+    const stream = cld.uploader.upload_stream(
+      {
+        folder,
+        public_id: `${base}-${Date.now().toString(36)}.${ext}`,
+        resource_type: "raw",
+        overwrite: false,
+      },
+      (err, res) => {
+        if (err) return reject(err);
+        if (!res?.secure_url) return reject(new Error("Cloudinary returned no file URL"));
+        resolve(res);
+      },
+    );
+    stream.on("error", reject);
+    stream.end(buffer);
+  });
+
+  return {
+    url: result.secure_url,
+    publicId: result.public_id,
+    bytes: result.bytes,
+    originalName: filename,
+  };
+}
+
 /**
  * Upload a file (Buffer) and return { url, publicId, width, height }.
  * Images are delivered with automatic format + quality (f_auto,q_auto).

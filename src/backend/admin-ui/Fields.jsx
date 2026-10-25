@@ -8,14 +8,16 @@
  *
  * Field types handled here:
  *   text, textarea, url, number, boolean, select, tags,
- *   i18n, i18n-textarea, i18n-list, pairs, image (with Cloudinary upload)
+ *   i18n, i18n-textarea, i18n-list, pairs, image (with Cloudinary upload),
+ *   file (a document such as the CV — upload / replace / remove)
  *
  * Styling: the `INPUT` constant below is the shared input look — change it
  * once to restyle every admin input.
  */
 import { useState, useRef } from "react";
-import { Upload, X, Plus, Trash2, Loader2 } from "lucide-react";
+import { Upload, X, Plus, Trash2, Loader2, FileText, ExternalLink } from "lucide-react";
 import { LANGUAGES } from "@shared/config.js";
+import { MAX_IMAGE_BYTES, MAX_FILE_BYTES, DOC_TYPES, formatMB } from "@backend/media/limits.js";
 import { LUCIDE_ICON_NAMES, BRAND_ICON_NAMES } from "@shared/icons/index.js";
 
 export const INPUT =
@@ -157,6 +159,54 @@ function PairsInput({ name, value = [] }) {
 }
 
 /* ------------------------------------------------------------------ *
+ * SHARED UPLOAD CALL — used by the image field and the file (CV) field.
+ *
+ * Posts one file to /api/upload and returns the JSON it answers with, or
+ * throws an Error whose message is safe to show the user. `kind` is "image"
+ * or "file" and decides which rules the server applies.
+ * ------------------------------------------------------------------ */
+async function postUpload(file, kind) {
+  // Refuse obviously wrong files HERE, before any bytes leave the browser —
+  // the server would refuse them too, but an instant message is friendlier,
+  // and a file over Next's 10 MB request cap never gets a readable reply.
+  if (kind === "image") {
+    if (!file.type.startsWith("image/")) throw new Error("Only images can go here.");
+    if (file.size > MAX_IMAGE_BYTES)
+      throw new Error(`That image is ${formatMB(file.size)} — the limit is ${formatMB(MAX_IMAGE_BYTES)}.`);
+  } else {
+    if (!DOC_TYPES[file.type]) throw new Error("Only PDF or Word documents can go here.");
+    if (file.size > MAX_FILE_BYTES)
+      throw new Error(
+        `That file is ${formatMB(file.size)} — the limit is ${formatMB(MAX_FILE_BYTES)}. Compress the PDF and try again.`,
+      );
+  }
+
+  const body = new FormData();
+  body.append("file", file);
+  body.append("kind", kind);
+  const res = await fetch("/api/upload", { method: "POST", body });
+
+  // The route always answers with JSON — but if the session expired the
+  // server may answer with an HTML login page instead, which would blow up
+  // res.json(). Read it as text first and only then try to parse.
+  const raw = await res.text();
+  let data = {};
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch {
+    throw new Error(
+      res.status === 401 || /<!doctype html/i.test(raw)
+        ? "Your admin session expired — reload the page, log in again and retry."
+        : `Server answered with something unexpected (HTTP ${res.status}). Check the terminal running npm run dev.`,
+    );
+  }
+
+  if (!res.ok) throw new Error(data.error || `Upload failed (HTTP ${res.status})`);
+  if (!data.url) throw new Error("Upload succeeded but no URL came back.");
+  return data;
+}
+
+/* ------------------------------------------------------------------ *
  * image — preview + upload to Cloudinary (or paste any URL)
  * ------------------------------------------------------------------ */
 export function ImageInput({ name, value = "" }) {
@@ -173,27 +223,7 @@ export function ImageInput({ name, value = "" }) {
     setBusy(true);
     setError("");
     try {
-      const body = new FormData();
-      body.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body });
-
-      // The route always answers with JSON — but if the session expired the
-      // server may answer with an HTML login page instead, which would blow up
-      // res.json(). Read it as text first and only then try to parse.
-      const raw = await res.text();
-      let data = {};
-      try {
-        data = raw ? JSON.parse(raw) : {};
-      } catch {
-        throw new Error(
-          res.status === 401 || /<!doctype html/i.test(raw)
-            ? "Your admin session expired — reload the page, log in again and retry."
-            : `Server answered with something unexpected (HTTP ${res.status}). Check the terminal running npm run dev.`,
-        );
-      }
-
-      if (!res.ok) throw new Error(data.error || `Upload failed (HTTP ${res.status})`);
-      if (!data.url) throw new Error("Upload succeeded but no image URL came back.");
+      const data = await postUpload(file, "image");
       setUrl(data.url);
     } catch (e) {
       setError(e.message);
@@ -248,6 +278,146 @@ export function ImageInput({ name, value = "" }) {
         </div>
         {error && <p className="text-xs text-red-500">{error}</p>}
       </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * file — a document (the CV): upload, replace, remove, or paste a URL
+ *
+ * Shows the current file with an "Open" link, an Upload / Replace button
+ * (PDF or Word — size limit and types live in src/backend/media/limits.js),
+ * and Remove. The saved value is just the URL, exactly like the image field,
+ * so you can still paste a link to a file hosted anywhere.
+ *
+ * `fileNameField` (set on the field in cms/schema.js) names a sibling text
+ * input — for the CV it is "cvFileName" — which is filled with the uploaded
+ * file's original name when it is empty, so the visitor's download gets a
+ * sensible name instead of Cloudinary's random one.
+ *
+ * Removing clears the link; the public site hides its Download button when
+ * the link is empty. The old file itself stays in your Cloudinary media
+ * library until you delete it there.
+ * ------------------------------------------------------------------ */
+export function FileInput({ name, value = "", fileNameField, accept = ".pdf,.doc,.docx" }) {
+  const [url, setUrl] = useState(value || "");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [justUploaded, setJustUploaded] = useState("");
+  const fileRef = useRef(null);
+  const wrapRef = useRef(null);
+
+  // A readable name for whatever is currently linked, from the end of the URL.
+  const currentName = (() => {
+    try {
+      const last = decodeURIComponent(new URL(url, "http://x").pathname.split("/").pop() || "");
+      return last || url;
+    } catch {
+      return url;
+    }
+  })();
+
+  async function upload(file) {
+    if (!file) return;
+    setBusy(true);
+    setError("");
+    setJustUploaded("");
+    try {
+      const data = await postUpload(file, "file");
+      setUrl(data.url);
+      setJustUploaded(file.name);
+
+      // Fill the "download file name" box if the owner left it empty.
+      if (fileNameField) {
+        const form = wrapRef.current?.closest("form");
+        const sibling = form?.querySelector(`input[name="${fileNameField}"]`);
+        if (sibling && !sibling.value.trim()) {
+          // Go through the native setter so React sees the change too.
+          const setter = Object.getOwnPropertyDescriptor(
+            window.HTMLInputElement.prototype,
+            "value",
+          )?.set;
+          setter?.call(sibling, file.name);
+          sibling.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+      }
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
+
+  return (
+    <div ref={wrapRef} className="space-y-2">
+      {/* current file */}
+      <div className="flex items-center gap-3 rounded-lg border border-line bg-chip px-3 py-2.5">
+        <span className="grid place-items-center w-9 h-9 rounded-md bg-surface border border-line text-muted shrink-0">
+          <FileText size={18} />
+        </span>
+        <div className="min-w-0 flex-1">
+          {url ? (
+            <>
+              <p className="text-sm font-medium text-heading truncate">{currentName}</p>
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-accent hover:underline inline-flex items-center gap-1"
+              >
+                Open in a new tab <ExternalLink size={11} />
+              </a>
+            </>
+          ) : (
+            <p className="text-sm text-faint">No file — upload a PDF below</p>
+          )}
+        </div>
+      </div>
+
+      {/* the actual value that gets saved */}
+      <input
+        name={name}
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="https://… — or upload below"
+        className={INPUT}
+      />
+
+      <div className="flex flex-wrap items-center gap-2">
+        <label className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-line bg-surface text-heading hover:border-accent cursor-pointer transition">
+          {busy ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
+          {busy ? "Uploading…" : url ? "Replace file" : "Upload file"}
+          <input
+            ref={fileRef}
+            type="file"
+            accept={accept}
+            className="hidden"
+            disabled={busy}
+            onChange={(e) => upload(e.target.files?.[0])}
+          />
+        </label>
+        {url && (
+          <button
+            type="button"
+            onClick={() => {
+              setUrl("");
+              setJustUploaded("");
+            }}
+            className="inline-flex items-center gap-1 px-2 py-2 text-sm text-muted hover:text-red-500 transition"
+          >
+            <X size={14} /> Remove
+          </button>
+        )}
+        <span className="text-xs text-faint">PDF or Word, up to {formatMB(MAX_FILE_BYTES)}</span>
+      </div>
+
+      {justUploaded && !error && (
+        <p className="text-xs text-accent">
+          Uploaded “{justUploaded}”. Press Save changes to put it live.
+        </p>
+      )}
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 }
@@ -317,6 +487,16 @@ export function FieldInput({ field, value, error }) {
       break;
     case "image":
       input = <ImageInput name={f.name} value={value} />;
+      break;
+    case "file":
+      input = (
+        <FileInput
+          name={f.name}
+          value={value}
+          fileNameField={f.fileNameField}
+          accept={f.accept}
+        />
+      );
       break;
     case "url":
       input = <input name={f.name} type="text" inputMode="url" defaultValue={value ?? ""} placeholder="https://" className={INPUT} />;

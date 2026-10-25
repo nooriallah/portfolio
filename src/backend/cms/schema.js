@@ -15,6 +15,9 @@
  *
  * Field types:
  *   text | textarea | url | image | number | boolean | select | tags
+ *   file            – a document (the CV): upload, replace, remove, or paste a
+ *                     URL. Options: fileNameField (sibling text field to fill
+ *                     with the uploaded name), accept (file-picker filter)
  *   i18n            – one short text per language
  *   i18n-textarea   – one paragraph per language
  *   i18n-list       – a list of short texts, per language (hero roles)
@@ -47,8 +50,20 @@ export const SETTINGS_GROUPS = [
       { name: "heroImage", type: "image", label: "Hero portrait (optional)" },
       { name: "aboutImage", type: "image", label: "About photo (fallback for the 3D scene)" },
       { name: "qrImage", type: "image", label: "Contact QR code" },
-      { name: "cvUrl", type: "url", label: "CV file URL (PDF)" },
-      { name: "cvFileName", type: "text", label: "CV download file name" },
+      // The CV: upload / replace / remove in the admin. `fileNameField` tells
+      // the upload to fill in cvFileName with the real file name when empty.
+      {
+        name: "cvUrl",
+        type: "file",
+        label: "CV (PDF or Word)",
+        fileNameField: "cvFileName",
+        accept: ".pdf,.doc,.docx",
+      },
+      {
+        name: "cvFileName",
+        type: "text",
+        label: "File name visitors get when they download the CV",
+      },
     ],
   },
   /* ------------------------------------------------------------------ *

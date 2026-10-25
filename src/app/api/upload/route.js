@@ -9,18 +9,23 @@
  *                    Use this first whenever an upload fails.
  *
  * Both are protected by src/proxy.js (must be logged in) and double-checked here.
- * Limits: images only, max 8 MB — change MAX_BYTES below if you need bigger.
+ * Limits and accepted types: src/backend/media/limits.js.
  */
 import { NextResponse } from "next/server";
 import { getSession } from "@backend/auth/index.js";
 import {
   uploadImage,
+  uploadFile,
   cloudinaryEnabled,
   cloudinaryStatus,
   explainCloudinaryError,
 } from "@backend/media/cloudinary.js";
 
-const MAX_BYTES = 8 * 1024 * 1024;
+/* What may be uploaded, per kind. The browser sends `kind` alongside the file:
+   "image" from the image fields, "file" from the CV / document fields.
+   The limits and accepted types live in src/backend/media/limits.js, shared
+   with the admin so the browser can refuse a file before sending it. */
+import { MAX_IMAGE_BYTES, MAX_FILE_BYTES, DOC_TYPES, formatMB } from "@backend/media/limits.js";
 
 /* ------------------------------------------------------------------ *
  * GET — configuration self-check (no secrets in the response)
@@ -59,19 +64,47 @@ export async function POST(request) {
 
   const form = await request.formData();
   const file = form.get("file");
+  // "image" (default) or "file" — the admin field says which it is, so a PDF
+  // can never be dropped into an image field, or a photo into the CV field.
+  const kind = form.get("kind") === "file" ? "file" : "image";
+
   if (!file || typeof file === "string") {
     return NextResponse.json({ error: "No file received" }, { status: 400 });
   }
-  if (!file.type.startsWith("image/")) {
-    return NextResponse.json({ error: "Only images are allowed" }, { status: 400 });
-  }
-  if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: "Image is larger than 8 MB" }, { status: 413 });
+
+  if (kind === "image") {
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json({ error: "Only images are allowed here" }, { status: 400 });
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      return NextResponse.json(
+        { error: `Image is larger than ${formatMB(MAX_IMAGE_BYTES)}` },
+        { status: 413 },
+      );
+    }
+  } else {
+    if (!DOC_TYPES[file.type]) {
+      return NextResponse.json(
+        { error: "Only PDF or Word documents are allowed here" },
+        { status: 400 },
+      );
+    }
+    if (file.size > MAX_FILE_BYTES) {
+      return NextResponse.json(
+        {
+          error: `That file is ${formatMB(file.size)} — the limit is ${formatMB(MAX_FILE_BYTES)}. Compress the PDF and try again.`,
+        },
+        { status: 413 },
+      );
+    }
   }
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await uploadImage(buffer, file.name);
+    const result =
+      kind === "file"
+        ? await uploadFile(buffer, file.name)
+        : await uploadImage(buffer, file.name);
     return NextResponse.json(result);
   } catch (err) {
     // Log the full error for the terminal, and send the readable reason to the

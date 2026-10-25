@@ -44,6 +44,7 @@ export function parseFields(fields, fd) {
       case "textarea":
       case "url":
       case "image":
+      case "file":
       case "select":
         v = str(fd.get(f.name));
         break;

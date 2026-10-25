@@ -118,8 +118,18 @@ src/shared/config.js         LANGUAGES (en, fa, ps) + NAV_IDS, shared with the s
 ```
 
 Every field is `{ name, type, label, … }`. Supported types: `text`, `textarea`,
-`url`, `image`, `number`, `boolean`, `select`, `tags`, `pairs`, and the translated
-ones `i18n`, `i18n-textarea`, `i18n-list`.
+`url`, `image`, `file`, `number`, `boolean`, `select`, `tags`, `pairs`, and the
+translated ones `i18n`, `i18n-textarea`, `i18n-list`.
+
+`image` and `file` both store just a URL and both offer Upload / Replace /
+Remove through `/api/upload` → Cloudinary. The difference: `file` (used for the
+CV) is uploaded as a Cloudinary **raw** asset, delivered byte-for-byte with its
+extension kept, because Cloudinary blocks PDF delivery through its image
+pipeline by default. Size limits and accepted types live in ONE place,
+`src/backend/media/limits.js`, imported by both the route and the admin field so
+the browser refuses a bad file before sending it. Documents are capped at 9 MB,
+not 10, because Next.js drops request bodies over 10 MB with an empty 500
+before our code runs and multipart adds overhead.
 
 The flow, both directions:
 
@@ -212,7 +222,9 @@ src/backend/
   db/schema.js            Drizzle tables
   auth/index.js           sessions, bcrypt, requireAdmin (Node runtime)
   auth/session-token.js   JWT verify only — Edge-safe, used by proxy.js
-  media/cloudinary.js     upload + credential parsing + error explanations
+  media/cloudinary.js     uploadImage / uploadFile + credential parsing + errors
+  media/limits.js         upload size limits + accepted document types (shared
+                          with the admin field so it can refuse files early)
   admin-ui/               Fields, Forms, AdminNav, Charts, SortableList,
                           LoginForm, PasswordForm, PageHeader,
                           SeoPreview (the live Google / share-card preview)
